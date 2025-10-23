@@ -1,0 +1,6 @@
+/Users/nik/Apps/PyFi/build/CMakeFiles/PyFi.dir
+/Users/nik/Apps/PyFi/build/CMakeFiles/edit_cache.dir
+/Users/nik/Apps/PyFi/build/CMakeFiles/rebuild_cache.dir
+/Users/nik/Apps/PyFi/build/test/CMakeFiles/main.dir
+/Users/nik/Apps/PyFi/build/test/CMakeFiles/edit_cache.dir
+/Users/nik/Apps/PyFi/build/test/CMakeFiles/rebuild_cache.dir
