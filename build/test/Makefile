@@ -117,42 +117,42 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-test/CMakeFiles/main.dir/rule:
-	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/main.dir/rule
-.PHONY : test/CMakeFiles/main.dir/rule
+test/CMakeFiles/test_bond.dir/rule:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/test_bond.dir/rule
+.PHONY : test/CMakeFiles/test_bond.dir/rule
 
 # Convenience name for target.
-main: test/CMakeFiles/main.dir/rule
-.PHONY : main
+test_bond: test/CMakeFiles/test_bond.dir/rule
+.PHONY : test_bond
 
 # fast build rule for target.
-main/fast:
-	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/main.dir/build.make test/CMakeFiles/main.dir/build
-.PHONY : main/fast
+test_bond/fast:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/build
+.PHONY : test_bond/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+test_bond.o: test_bond.cpp.o
+.PHONY : test_bond.o
 
 # target to build an object file
-main.cpp.o:
-	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/main.dir/build.make test/CMakeFiles/main.dir/main.cpp.o
-.PHONY : main.cpp.o
+test_bond.cpp.o:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/test_bond.cpp.o
+.PHONY : test_bond.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+test_bond.i: test_bond.cpp.i
+.PHONY : test_bond.i
 
 # target to preprocess a source file
-main.cpp.i:
-	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/main.dir/build.make test/CMakeFiles/main.dir/main.cpp.i
-.PHONY : main.cpp.i
+test_bond.cpp.i:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/test_bond.cpp.i
+.PHONY : test_bond.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+test_bond.s: test_bond.cpp.s
+.PHONY : test_bond.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/main.dir/build.make test/CMakeFiles/main.dir/main.cpp.s
-.PHONY : main.cpp.s
+test_bond.cpp.s:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/test_bond.cpp.s
+.PHONY : test_bond.cpp.s
 
 # Help Target
 help:
@@ -162,10 +162,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... main"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... test_bond"
+	@echo "... test_bond.o"
+	@echo "... test_bond.i"
+	@echo "... test_bond.s"
 .PHONY : help
 
 

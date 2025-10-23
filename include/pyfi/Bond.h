@@ -6,18 +6,18 @@
 #define BOND_H
 
 #include <type_traits>
+#include <concepts>
 #include <vector>
 
 namespace pyfi {
 
-    template <typename T> requires std::is_arithmetic_v<T>
+    template <std::floating_point T>
     class Bond {
     public:
 
         explicit Bond(const std::vector<T>& cf, T interest, int time, int compounding_annual);
         Bond(const Bond& b) = default;
         Bond& operator=(const Bond& b) = default;
-        bool operator==(const Bond&) const = default;
         ~Bond() = default;
 
         T interest() const { return interest_; }
@@ -30,16 +30,16 @@ namespace pyfi {
          *
          * @return the present value of the bond
          */
-        float pv();
+        T pv();
 
 
     private:
         std::vector<T> cashflows_;
         T interest_;
+        T price_;
         int time_;
         int compounding_annual_;
         int pv_;
-
         bool same_cashflow_;
     };
 

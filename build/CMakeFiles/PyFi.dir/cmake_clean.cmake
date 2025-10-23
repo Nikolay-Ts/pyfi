@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/PyFi.dir/src/Bond.cpp.o"
+  "CMakeFiles/PyFi.dir/src/Bond.cpp.o.d"
   "CMakeFiles/PyFi.dir/src/library.cpp.o"
   "CMakeFiles/PyFi.dir/src/library.cpp.o.d"
   "libPyFi.a"

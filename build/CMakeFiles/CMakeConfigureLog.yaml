@@ -245,3 +245,45 @@ events:
       LTO support using: LLVM version 17.0.0 (static support for 29, runtime is 29)
       TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.3.8)
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "build/_deps/pybind11-src/tools/pybind11Common.cmake:323 (check_cxx_compiler_flag)"
+      - "build/_deps/pybind11-src/tools/pybind11Common.cmake:363 (_pybind11_return_if_cxx_and_linker_flags_work)"
+      - "build/_deps/pybind11-src/tools/pybind11Common.cmake:435 (_pybind11_generate_lto)"
+      - "build/_deps/pybind11-src/CMakeLists.txt:249 (include)"
+    checks:
+      - "Performing Test HAS_FLTO_THIN"
+    directories:
+      source: "/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-hS5Adx"
+      binary: "/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-hS5Adx"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: ""
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk"
+    buildResult:
+      variable: "HAS_FLTO_THIN"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-hS5Adx'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f7671/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f7671.dir/build.make CMakeFiles/cmTC_f7671.dir/build
+        Building CXX object CMakeFiles/cmTC_f7671.dir/src.cxx.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DHAS_FLTO_THIN  -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk   -flto -MD -MT CMakeFiles/cmTC_f7671.dir/src.cxx.o -MF CMakeFiles/cmTC_f7671.dir/src.cxx.o.d -o CMakeFiles/cmTC_f7671.dir/src.cxx.o -c /Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-hS5Adx/src.cxx
+        Linking CXX executable cmTC_f7671
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f7671.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_f7671.dir/src.cxx.o -o cmTC_f7671  -flto
+        
+      exitCode: 0
+...

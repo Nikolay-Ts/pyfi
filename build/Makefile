@@ -130,17 +130,41 @@ PyFi/fast:
 .PHONY : PyFi/fast
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named test_bond
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
-.PHONY : main
+test_bond: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bond
+.PHONY : test_bond
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/main.dir/build.make test/CMakeFiles/main.dir/build
-.PHONY : main/fast
+test_bond/fast:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/build
+.PHONY : test_bond/fast
+
+src/Bond.o: src/Bond.cpp.o
+.PHONY : src/Bond.o
+
+# target to build an object file
+src/Bond.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.o
+.PHONY : src/Bond.cpp.o
+
+src/Bond.i: src/Bond.cpp.i
+.PHONY : src/Bond.i
+
+# target to preprocess a source file
+src/Bond.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.i
+.PHONY : src/Bond.cpp.i
+
+src/Bond.s: src/Bond.cpp.s
+.PHONY : src/Bond.s
+
+# target to generate assembly for a file
+src/Bond.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.s
+.PHONY : src/Bond.cpp.s
 
 src/library.o: src/library.cpp.o
 .PHONY : src/library.o
@@ -175,7 +199,10 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... PyFi"
-	@echo "... main"
+	@echo "... test_bond"
+	@echo "... src/Bond.o"
+	@echo "... src/Bond.i"
+	@echo "... src/Bond.s"
 	@echo "... src/library.o"
 	@echo "... src/library.i"
 	@echo "... src/library.s"
