@@ -38,6 +38,20 @@ namespace pyfi {
         return pv_;
     }
 
+    template <std::floating_point T>
+    T Bond<T>::pv(const bool same_cashflow) {
+        if (interest_ < 1e-9) {
+            return pv();
+        }
+
+        if (same_cashflow) {
+            auto top = (1 - pow(1 + interest_, -(cashflows_.size()))) / interest_ ;
+            return cashflows_[0] * top;
+        }
+
+        return pv();
+    }
+
 
     template class Bond<float>;
     template class Bond<double>;

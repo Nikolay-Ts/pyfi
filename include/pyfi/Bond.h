@@ -5,7 +5,6 @@
 #ifndef BOND_H
 #define BOND_H
 
-#include <type_traits>
 #include <concepts>
 #include <vector>
 
@@ -26,12 +25,19 @@ namespace pyfi {
         std::vector<T> cashflows() { return cashflows_; }
 
         /*
-         * @brief calculates the present value of the bond
-         *
-         * @return the present value of the bond
-         */
+        * @brief calculates the present value of the bond
+        *
+        * @return the present value of the bond
+        */
         T pv();
 
+        /*
+         * @brief calculates the present value of the bond
+         *
+         * @param same_cashflow if the user knows that the cashflows are the same
+         * @return the present value of the bond
+         */
+         T pv(bool same_cashflow);
 
     private:
         std::vector<T> cashflows_;
@@ -42,8 +48,6 @@ namespace pyfi {
         int pv_;
         bool same_cashflow_;
     };
-
-
 } // namespace pyfi
 
 
