@@ -15,7 +15,7 @@ TEST_CASE("Test vector length") {
     constexpr size_t n = stop - start;
 
     std::vector<float> c(n);
-    for (size_t i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)g
         c[i] = scale * (start + static_cast<float>(i));
     auto myBond = pyfi::Bond<float>(c, 5.0, 1, 1);
 
