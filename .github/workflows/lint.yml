@@ -1,0 +1,55 @@
+name: Lint on PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  clang-format:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format-17
+      - name: Check formatting
+        shell: bash
+        run: |
+          set -e
+          files=$(git ls-files '*.c' '*.cc' '*.cpp' '*.cxx' '*.h' '*.hh' '*.hpp')
+          [ -z "$files" ] && exit 0
+          clang-format-17 -i $files
+          if ! git diff --quiet; then
+            echo "::error::Code not formatted. Run clang-format locally."
+            git --no-pager diff --name-only
+            exit 1
+          fi
+
+  clang-tidy:
+    needs: clang-format
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ clang-tidy-17
+      - name: Configure CMake
+        run: cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      - name: Run clang-tidy on changed C/C++ files
+        shell: bash
+        run: |
+          set -e
+          base="origin/${{ github.base_ref }}"
+          git fetch origin ${{ github.base_ref }} --depth=1
+          files=$(git diff --name-only --diff-filter=ACMRT "$base"... | grep -E '\.(c|cc|cpp|cxx|h|hh|hpp)$' || true)
+          [ -z "$files" ] && { echo "No C/C++ changes."; exit 0; }
+          clang-tidy-17 --warnings-as-errors='*' -p build $files
