@@ -31,9 +31,9 @@ namespace pyfi {
         //     std::not_equal_to<T>() == cashflows_.end()
         // );
 
-        for (int i = 0; i < cashflows_.size(); i++) {
+        for (int i = 0; i < cashflows_.size(); i++)
             pv_ += cashflows_[i] * std::pow(1 + interest_, -static_cast<T>(i + 1));
-        }
+
 
         return pv_;
     }
