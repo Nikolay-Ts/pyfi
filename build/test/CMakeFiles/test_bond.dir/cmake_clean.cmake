@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_bond.dir/test_bond.cpp.o"
   "CMakeFiles/test_bond.dir/test_bond.cpp.o.d"
   "test_bond"
+  "test_bond-b12d07c_tests.cmake"
   "test_bond.pdb"
 )
 

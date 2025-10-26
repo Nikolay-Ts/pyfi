@@ -287,3 +287,44 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "build/_deps/catch2-src/CMake/CatchMiscFunctions.cmake:12 (check_cxx_compiler_flag)"
+      - "build/_deps/catch2-src/CMake/CatchMiscFunctions.cmake:120 (add_cxx_flag_if_supported_to_targets)"
+      - "build/_deps/catch2-src/src/CMakeLists.txt:352 (add_build_reproducibility_settings)"
+    checks:
+      - "Performing Test HAVE_FLAG__ffile_prefix_map__Users_nik_Apps_PyFi_build__deps_catch2_src__"
+    directories:
+      source: "/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-YfijGE"
+      binary: "/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-YfijGE"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/Users/nik/Apps/PyFi/build/_deps/catch2-src/extras;/Users/nik/Apps/PyFi/build/_deps/catch2-src/CMake"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk"
+    buildResult:
+      variable: "HAVE_FLAG__ffile_prefix_map__Users_nik_Apps_PyFi_build__deps_catch2_src__"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-YfijGE'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d3eb1/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d3eb1.dir/build.make CMakeFiles/cmTC_d3eb1.dir/build
+        Building CXX object CMakeFiles/cmTC_d3eb1.dir/src.cxx.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DHAVE_FLAG__ffile_prefix_map__Users_nik_Apps_PyFi_build__deps_catch2_src__  -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk   -ffile-prefix-map=/Users/nik/Apps/PyFi/build/_deps/catch2-src/= -MD -MT CMakeFiles/cmTC_d3eb1.dir/src.cxx.o -MF CMakeFiles/cmTC_d3eb1.dir/src.cxx.o.d -o CMakeFiles/cmTC_d3eb1.dir/src.cxx.o -c /Users/nik/Apps/PyFi/build/CMakeFiles/CMakeScratch/TryCompile-YfijGE/src.cxx
+        Linking CXX executable cmTC_d3eb1
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d3eb1.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_d3eb1.dir/src.cxx.o -o cmTC_d3eb1
+        
+      exitCode: 0
+...

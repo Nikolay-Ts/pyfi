@@ -1,0 +1,38 @@
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  misc-*,
+  google-default-arguments,
+  google-explicit-constructor,
+  google-runtime-references,
+  -readability-identifier-naming,
+  -readability-magic-numbers,
+  -cppcoreguidelines-avoid-magic-numbers
+
+HeaderFilterRegex: '.*'
+AnalyzeTemporaryDtors: true
+FormatStyle: none
+ExtraArgs: ['-std=c++20']
+
+CheckOptions:
+  # Always require braces for single-line control statements.
+  - key: readability-braces-around-statements.ShortStatementLines
+    value: '0'
+
+  # Encourage `auto` for verbose types (helps with Armadillo, Boost, etc.).
+  - key: modernize-use-auto.MinTypeNameLength
+    value: '7'
+
+  # Prefer [[nodiscard]] on suitable functions.
+  - key: modernize-use-nodiscard.NodiscardSpelling
+    value: '[[nodiscard]]'
+
+  # Be less noisy about function-like macros in tests if needed.
+  - key: cppcoreguidelines-macro-usage.IgnoreCommandLineMacros
+    value: '1'

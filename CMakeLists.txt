@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(PyFi LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-format-style=file")
+#set(CMAKE_CXX_CLANG_TIDY ".clang-analyzer-*g-tidy;-format-style=file")
 
 include(FetchContent)
 include(CTest)
@@ -18,15 +18,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
+find_package(Boost 1.74 REQUIRED)
 
-add_library(PyFi STATIC
+add_library(
+    PyFi STATIC
         src/Bond.cpp
-        src/library.cpp
 )
-target_include_directories(PyFi PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
-        $<INSTALL_INTERFACE:include>)
+target_include_directories(
+    PyFi PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
 set_target_properties(PyFi PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+target_link_libraries(PyFi PRIVATE Boost::boost)
 
 #pybind11_add_module(pyfi MODULE
 #        src/bindings.cpp
