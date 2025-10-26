@@ -190,17 +190,16 @@ namespace pyfi::bond {
   template double price_from_yield(const std::vector<double> &cash_flows, double yield, int m);
   template float price_from_yield(const std::vector<float> &cash_flows, float yield, int m);
 
-  template long double present_value<long double>(
-      const std::vector<long double>&, long double, long double, int, int, bool);
+  template long double
+  present_value<long double>(const std::vector<long double>&, long double, long double, int, int, bool);
 
-  template std::vector<long double> build_bond_cashflows<long double>(
-      long double, long double, int, int);
+  template std::vector<long double>
+  build_bond_cashflows<long double>(   long double, long double, int, int);
 
-  template long double internal_rate_return<long double>(
-      const std::vector<long double>&,
-      long double, long double, long double,
-      int, int);
+  template long double
+  internal_rate_return<long double>(const std::vector<long double>&, long double, long double, long double, int, int);
 
-  template long double price_from_yield<long double>(
-      const std::vector<long double>&, long double, int);
+  template long double
+  price_from_yield<long double>(const std::vector<long double>&, long double, int);\
+
 } // namespace pyfi::bond
