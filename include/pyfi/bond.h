@@ -8,46 +8,36 @@
 #include <concepts>
 #include <vector>
 
-namespace pyfi {
+namespace pyfi::bond {
+  template <std::floating_point T>
+  [[nodiscard]] T present_value(
+      const std::vector<T> &cash_flows,
+      T annual_yield,
+      T par_value,
+      int years,
+      int compounding_annually,
+      bool same_cashflows
+  );
 
-    template <std::floating_point T>
-    class Bond {
-    public:
+  template <std::floating_point T>
+  T internal_rate_return(
+      const std::vector<T> &cash_flows,
+      T price,
+      T interest_rate,
+      T par_value,
+      int years,
+      int compounding_annually
+  );
 
-        explicit Bond(const std::vector<T>& cf, T interest, int time, int compounding_annual);
-        Bond(const Bond& b) = default;
-        Bond& operator=(const Bond& b) = default;
-        ~Bond() = default;
+  template <std::floating_point T>
+  static std::vector<T> build_bond_cashflows(
+    T par_value,
+    T coupon_rate,
+    int years,
+    int m
+  );
 
-        T interest() const { return interest_; }
-        int time() const   { return time_; }
-        int compounding_annual() const { return compounding_annual_; }
-        std::vector<T> cashflows() { return cashflows_; }
 
-        /*
-        * @brief calculates the present value of the bond
-        *
-        * @return the present value of the bond
-        */
-        T pv();
-
-        /*
-         * @brief calculates the present value of the bond
-         *
-         * @param same_cashflow if the user knows that the cashflows are the same
-         * @return the present value of the bond
-         */
-         T pv(bool same_cashflow);
-
-    private:
-        std::vector<T> cashflows_;
-        T interest_;
-        T price_;
-        int time_;
-        int compounding_annual_;
-        int pv_;
-        bool same_cashflow_;
-    };
 } // namespace pyfi
 
 

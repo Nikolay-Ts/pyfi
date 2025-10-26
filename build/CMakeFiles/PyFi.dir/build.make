@@ -86,33 +86,17 @@ CMakeFiles/PyFi.dir/src/Bond.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PyFi.dir/src/Bond.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nik/Apps/PyFi/src/Bond.cpp -o CMakeFiles/PyFi.dir/src/Bond.cpp.s
 
-CMakeFiles/PyFi.dir/src/library.cpp.o: CMakeFiles/PyFi.dir/flags.make
-CMakeFiles/PyFi.dir/src/library.cpp.o: /Users/nik/Apps/PyFi/src/library.cpp
-CMakeFiles/PyFi.dir/src/library.cpp.o: CMakeFiles/PyFi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/PyFi.dir/src/library.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PyFi.dir/src/library.cpp.o -MF CMakeFiles/PyFi.dir/src/library.cpp.o.d -o CMakeFiles/PyFi.dir/src/library.cpp.o -c /Users/nik/Apps/PyFi/src/library.cpp
-
-CMakeFiles/PyFi.dir/src/library.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PyFi.dir/src/library.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nik/Apps/PyFi/src/library.cpp > CMakeFiles/PyFi.dir/src/library.cpp.i
-
-CMakeFiles/PyFi.dir/src/library.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PyFi.dir/src/library.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nik/Apps/PyFi/src/library.cpp -o CMakeFiles/PyFi.dir/src/library.cpp.s
-
 # Object files for target PyFi
 PyFi_OBJECTS = \
-"CMakeFiles/PyFi.dir/src/Bond.cpp.o" \
-"CMakeFiles/PyFi.dir/src/library.cpp.o"
+"CMakeFiles/PyFi.dir/src/Bond.cpp.o"
 
 # External object files for target PyFi
 PyFi_EXTERNAL_OBJECTS =
 
 libPyFi.a: CMakeFiles/PyFi.dir/src/Bond.cpp.o
-libPyFi.a: CMakeFiles/PyFi.dir/src/library.cpp.o
 libPyFi.a: CMakeFiles/PyFi.dir/build.make
 libPyFi.a: CMakeFiles/PyFi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libPyFi.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPyFi.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/PyFi.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PyFi.dir/link.txt --verbose=$(VERBOSE)
 
