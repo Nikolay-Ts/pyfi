@@ -14,12 +14,14 @@
 
 namespace pyfi::bond {
   template <std::floating_point T>
-  [[nodiscard]] T present_value(const std::vector<T>& cash_flows,
-                                const T annual_yield,
-                                T par_value,
-                                const int years,
-                                int compounding_annually,
-                                const bool same_cashflows ) {
+  T present_value(
+    const std::vector<T>& cash_flows,
+    const T annual_yield,
+    T par_value,
+    const int years,
+    int compounding_annually,
+    const bool same_cashflows
+  ) {
     if (years < 0 || compounding_annually <= 0) {
       throw std::invalid_argument("bad tenor or m");
     }
@@ -53,9 +55,8 @@ namespace pyfi::bond {
     return pv;
 }
 
-
   template <std::floating_point T>
-  static std::vector<T> build_bond_cashflows(
+  std::vector<T> build_bond_cashflows(
     T par_value,
     T coupon_rate,
     const int years,
@@ -80,7 +81,10 @@ namespace pyfi::bond {
     const int years,
     const int compounding_annually
   ) {
-    using namespace boost::math::tools;
+    using boost::math::tools::bracket_and_solve_root;
+    using boost::math::tools::eps_tolerance;
+    using boost::math::tools::toms748_solve;
+
 
     const int m = compounding_annually > 0 ? compounding_annually : 1;
 
@@ -88,8 +92,13 @@ namespace pyfi::bond {
         ? build_bond_cashflows(par_value, interest_rate, years, m)
         : cash_flows;
 
-    if (cf.empty()) throw std::invalid_argument("No cash flows.");
-    if (!(price > T{0})) throw std::invalid_argument("Price must be > 0.");
+    if (cf.empty()) {
+      throw std::invalid_argument("No cash flows");
+    }
+
+    if (!(price > T{0})) {
+      throw std::invalid_argument("Price must be > 0");
+    }
 
     auto f = [&](T rp) {
       if (rp <= T{-1}) return std::numeric_limits<T>::infinity();
@@ -111,24 +120,87 @@ namespace pyfi::bond {
     const T min_rp = T{-1} + std::numeric_limits<T>::epsilon();
     const T max_rp = T{10};
 
+    rp_guess = std::clamp(rp_guess, T{-1} + std::numeric_limits<T>::epsilon()*T{10}, T{10});
+
+    std::uintmax_t it = 128;
+    eps_tolerance<T> tol(std::numeric_limits<T>::digits - 6);
+
     auto bracket = bracket_and_solve_root(
         f,
         rp_guess,
         T{2},
         rising,
-        std::numeric_limits<T>::digits - 4,
-        min_rp,
-        max_rp
+        tol,
+        it
     );
 
-    auto tol = eps_tolerance<T>(std::numeric_limits<T>::digits - 6);
-    auto root_bounds = toms748_solve(f, bracket.first, bracket.second, tol);
+    auto root_bounds = toms748_solve(f, bracket.first, bracket.second, tol, it);
     const T rp = (root_bounds.first + root_bounds.second) / T{2};
-
     return std::pow(T{1} + rp, static_cast<T>(m)) - T{1};
   }
+
+  template <std::floating_point T>
+  T price_from_yield(const std::vector<T>& cash_flows, T yield, int m) {
+      const T r = yield / static_cast<T>(m);
+      T pv = 0;
+      T disc = 1;
+      for (size_t i = 0; i < cash_flows.size(); ++i) {
+        disc *= (1 + r);
+        pv += cash_flows[i] / disc;
+      }
+      return pv;
+    }
+
 
   template double present_value<double>(const std::vector<double>&, double, double, int, int, bool);
   template float  present_value<float >(const std::vector<float >& , float , float , int, int, bool);
 
+  template double internal_rate_return<double>(
+      const std::vector<double> &cash_flows,
+      double price,
+      double interest_rate,
+      double par_value,
+      int years,
+      int compounding_annually
+  );
+
+  template std::vector<double> build_bond_cashflows(
+    double par_value,
+    double coupon_rate,
+    int years,
+    int m
+  );
+
+  template std::vector<float> build_bond_cashflows(
+    float par_value,
+    float coupon_rate,
+    int years,
+    int m
+  );
+
+  template float internal_rate_return<float>(
+      const std::vector<float> &cash_flows,
+      float price,
+      float interest_rate,
+      float par_value,
+      int years,
+      int compounding_annually
+  );
+
+  template double price_from_yield(const std::vector<double> &cash_flows, double yield, int m);
+  template float price_from_yield(const std::vector<float> &cash_flows, float yield, int m);
+
+  template long double present_value<long double>(
+      const std::vector<long double>&, long double, long double, int, int, bool);
+
+  template std::vector<long double> build_bond_cashflows<long double>(
+      long double, long double, int, int);
+
+  template long double internal_rate_return<long double>(
+      const std::vector<long double>&,
+      long double, long double, long double,
+      int, int);
+
+  template long double price_from_yield<long double>(
+      const std::vector<long double>&, long double, int);
 } // namespace pyfi::bond

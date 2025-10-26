@@ -30,12 +30,15 @@ namespace pyfi::bond {
   );
 
   template <std::floating_point T>
-  static std::vector<T> build_bond_cashflows(
+  std::vector<T> build_bond_cashflows(
     T par_value,
     T coupon_rate,
     int years,
     int m
   );
+
+  template <std::floating_point T>
+  T price_from_yield(const std::vector<T> &cash_flows, T yield, int m);
 
 
 } // namespace pyfi

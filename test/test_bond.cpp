@@ -85,3 +85,41 @@ TEST_CASE("Invalid inputs throw") {
     REQUIRE_THROWS(present_value<double>({10.0}, 0.05, 1000.0, -1, 2, true));
     REQUIRE_THROWS(present_value<double>({10.0}, -2.0, 1000.0, 5, 1, true));
 }
+
+TEST_CASE("IRR: par bond -> yield equals coupon", "[irr]") {
+  using T = double;
+  const int years = 5, m = 1;
+  const T par = 1000;
+  const T coupon = 0.06;
+
+  const auto cfs = build_bond_cashflows(par, coupon, years, m);
+  const T price = par;  // at par when y == coupon
+
+  const T irr = internal_rate_return<T>(cfs, price, /*interest_rate=*/coupon, par, years, m);
+
+  REQUIRE(irr == Approx(coupon).epsilon(1e-12));
+  REQUIRE(price_from_yield(cfs, irr, m) == Approx(price).epsilon(1e-12));
+}
+
+TEST_CASE("IRR: premium/discount bond", "[irr]") {
+  using T = double;
+  const int years = 7, m = 1;
+  const T par = 1000;
+  const T coupon = 0.06;  // 6% coupon
+
+  const auto cfs = build_bond_cashflows(par, coupon, years, m);
+
+  {
+    const T y_true = 0.07;
+    const T price = price_from_yield(cfs, y_true, m);
+    const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
+    REQUIRE(irr == Approx(y_true).epsilon(1e-10));
+  }
+
+  {
+    const T y_true = 0.05;
+    const T price = price_from_yield(cfs, y_true, m);
+    const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
+    REQUIRE(irr == Approx(y_true).epsilon(1e-10));
+  }
+}

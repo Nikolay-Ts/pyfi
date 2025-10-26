@@ -1,6 +1,72 @@
-# CLion / IntelliJ
-/.idea/
+# OS
+.DS_Store
 
-# CMake build dirs
-/build/
-/cmake-build-*/
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# CMake (in-tree files)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+Makefile
+install_manifest.txt
+
+# Build trees (anywhere)
+**/build*/
+**/cmake-build-*/
+**/out/
+**/bin/
+**/lib/
+
+# Objects and libs
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.lib
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+
+# Debug symbols
+*.dSYM/
+*.pdb
+
+# Coverage / profiles
+*.gcno
+*.gcda
+*.gcov
+*.profraw
+*.profdata
+coverage/
+
+# Ninja
+build.ninja
+.ninja_log
+.ninja_deps
+
+# Xcode
+*.xcworkspace/
+*.xcuserdatad/
+*.xcuserstate
+DerivedData/
+
+# Python (pybind11 helpers)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+
+# clang tooling caches
+.clangd/
+.clang-tidy-cache/
+.cache/
