@@ -23,6 +23,8 @@ find_package(Boost 1.74 REQUIRED)
 add_library(
     PyFi STATIC
         src/Bond.cpp
+        include/pyfi/option.h
+        src/option.cpp
 )
 target_include_directories(
     PyFi PUBLIC
