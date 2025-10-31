@@ -42,6 +42,7 @@
 /Users/nik/Apps/PyFi/build/_deps/catch2-build/src/CMakeFiles/edit_cache.dir
 /Users/nik/Apps/PyFi/build/_deps/catch2-build/src/CMakeFiles/rebuild_cache.dir
 /Users/nik/Apps/PyFi/build/test/CMakeFiles/test_bond.dir
+/Users/nik/Apps/PyFi/build/test/CMakeFiles/test_option.dir
 /Users/nik/Apps/PyFi/build/test/CMakeFiles/test.dir
 /Users/nik/Apps/PyFi/build/test/CMakeFiles/edit_cache.dir
 /Users/nik/Apps/PyFi/build/test/CMakeFiles/rebuild_cache.dir

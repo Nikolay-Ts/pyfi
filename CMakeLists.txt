@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(PyFi LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
-#set(CMAKE_CXX_CLANG_TIDY ".clang-analyzer-*g-tidy;-format-style=file")
+
+add_compile_options(-Wall -Wextra -Wpedantic)
 
 include(FetchContent)
 include(CTest)
@@ -22,9 +23,8 @@ find_package(Boost 1.74 REQUIRED)
 
 add_library(
     PyFi STATIC
-        src/Bond.cpp
-        include/pyfi/option.h
-        src/option.cpp
+    src/bond.cpp
+    src/option.cpp
 )
 target_include_directories(
     PyFi PUBLIC

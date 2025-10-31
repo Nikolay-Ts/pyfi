@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/nik/Apps/PyFi/include -I/Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/.. -I/Users/nik/Apps/PyFi/build/_deps/catch2-build/generated-includes
 
-CXX_FLAGSx86_64 = -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk
+CXX_FLAGSx86_64 = -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -Wall -Wextra -Wpedantic
 
-CXX_FLAGS = -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk
+CXX_FLAGS = -std=gnu++20 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk -Wall -Wextra -Wpedantic
 

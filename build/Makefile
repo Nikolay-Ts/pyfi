@@ -542,29 +542,66 @@ test_bond/fast:
 	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/build
 .PHONY : test_bond/fast
 
-src/Bond.o: src/Bond.cpp.o
-.PHONY : src/Bond.o
+#=============================================================================
+# Target rules for targets named test_option
+
+# Build rule for target.
+test_option: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_option
+.PHONY : test_option
+
+# fast build rule for target.
+test_option/fast:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_option.dir/build.make test/CMakeFiles/test_option.dir/build
+.PHONY : test_option/fast
+
+src/bond.o: src/bond.cpp.o
+.PHONY : src/bond.o
 
 # target to build an object file
-src/Bond.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.o
-.PHONY : src/Bond.cpp.o
+src/bond.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/bond.cpp.o
+.PHONY : src/bond.cpp.o
 
-src/Bond.i: src/Bond.cpp.i
-.PHONY : src/Bond.i
+src/bond.i: src/bond.cpp.i
+.PHONY : src/bond.i
 
 # target to preprocess a source file
-src/Bond.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.i
-.PHONY : src/Bond.cpp.i
+src/bond.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/bond.cpp.i
+.PHONY : src/bond.cpp.i
 
-src/Bond.s: src/Bond.cpp.s
-.PHONY : src/Bond.s
+src/bond.s: src/bond.cpp.s
+.PHONY : src/bond.s
 
 # target to generate assembly for a file
-src/Bond.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/Bond.cpp.s
-.PHONY : src/Bond.cpp.s
+src/bond.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/bond.cpp.s
+.PHONY : src/bond.cpp.s
+
+src/option.o: src/option.cpp.o
+.PHONY : src/option.o
+
+# target to build an object file
+src/option.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/option.cpp.o
+.PHONY : src/option.cpp.o
+
+src/option.i: src/option.cpp.i
+.PHONY : src/option.i
+
+# target to preprocess a source file
+src/option.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/option.cpp.i
+.PHONY : src/option.cpp.i
+
+src/option.s: src/option.cpp.s
+.PHONY : src/option.s
+
+# target to generate assembly for a file
+src/option.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PyFi.dir/build.make CMakeFiles/PyFi.dir/src/option.cpp.s
+.PHONY : src/option.cpp.s
 
 # Help Target
 help:
@@ -607,9 +644,13 @@ help:
 	@echo "... Catch2WithMain"
 	@echo "... PyFi"
 	@echo "... test_bond"
-	@echo "... src/Bond.o"
-	@echo "... src/Bond.i"
-	@echo "... src/Bond.s"
+	@echo "... test_option"
+	@echo "... src/bond.o"
+	@echo "... src/bond.i"
+	@echo "... src/bond.s"
+	@echo "... src/option.o"
+	@echo "... src/option.i"
+	@echo "... src/option.s"
 .PHONY : help
 
 

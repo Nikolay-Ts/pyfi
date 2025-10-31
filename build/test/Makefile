@@ -140,6 +140,20 @@ test_bond/fast:
 	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/build
 .PHONY : test_bond/fast
 
+# Convenience name for target.
+test/CMakeFiles/test_option.dir/rule:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/test_option.dir/rule
+.PHONY : test/CMakeFiles/test_option.dir/rule
+
+# Convenience name for target.
+test_option: test/CMakeFiles/test_option.dir/rule
+.PHONY : test_option
+
+# fast build rule for target.
+test_option/fast:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_option.dir/build.make test/CMakeFiles/test_option.dir/build
+.PHONY : test_option/fast
+
 test_bond.o: test_bond.cpp.o
 .PHONY : test_bond.o
 
@@ -164,6 +178,30 @@ test_bond.cpp.s:
 	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_bond.dir/build.make test/CMakeFiles/test_bond.dir/test_bond.cpp.s
 .PHONY : test_bond.cpp.s
 
+test_option.o: test_option.cpp.o
+.PHONY : test_option.o
+
+# target to build an object file
+test_option.cpp.o:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_option.dir/build.make test/CMakeFiles/test_option.dir/test_option.cpp.o
+.PHONY : test_option.cpp.o
+
+test_option.i: test_option.cpp.i
+.PHONY : test_option.i
+
+# target to preprocess a source file
+test_option.cpp.i:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_option.dir/build.make test/CMakeFiles/test_option.dir/test_option.cpp.i
+.PHONY : test_option.cpp.i
+
+test_option.s: test_option.cpp.s
+.PHONY : test_option.s
+
+# target to generate assembly for a file
+test_option.cpp.s:
+	cd /Users/nik/Apps/PyFi/build && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_option.dir/build.make test/CMakeFiles/test_option.dir/test_option.cpp.s
+.PHONY : test_option.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -174,9 +212,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... test_bond"
+	@echo "... test_option"
 	@echo "... test_bond.o"
 	@echo "... test_bond.i"
 	@echo "... test_bond.s"
+	@echo "... test_option.o"
+	@echo "... test_option.i"
+	@echo "... test_option.s"
 .PHONY : help
 
 

@@ -72,31 +72,47 @@ include CMakeFiles/PyFi.dir/flags.make
 CMakeFiles/PyFi.dir/codegen:
 .PHONY : CMakeFiles/PyFi.dir/codegen
 
-CMakeFiles/PyFi.dir/src/Bond.cpp.o: CMakeFiles/PyFi.dir/flags.make
-CMakeFiles/PyFi.dir/src/Bond.cpp.o: /Users/nik/Apps/PyFi/src/Bond.cpp
-CMakeFiles/PyFi.dir/src/Bond.cpp.o: CMakeFiles/PyFi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/PyFi.dir/src/Bond.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PyFi.dir/src/Bond.cpp.o -MF CMakeFiles/PyFi.dir/src/Bond.cpp.o.d -o CMakeFiles/PyFi.dir/src/Bond.cpp.o -c /Users/nik/Apps/PyFi/src/Bond.cpp
+CMakeFiles/PyFi.dir/src/bond.cpp.o: CMakeFiles/PyFi.dir/flags.make
+CMakeFiles/PyFi.dir/src/bond.cpp.o: /Users/nik/Apps/PyFi/src/bond.cpp
+CMakeFiles/PyFi.dir/src/bond.cpp.o: CMakeFiles/PyFi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/PyFi.dir/src/bond.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PyFi.dir/src/bond.cpp.o -MF CMakeFiles/PyFi.dir/src/bond.cpp.o.d -o CMakeFiles/PyFi.dir/src/bond.cpp.o -c /Users/nik/Apps/PyFi/src/bond.cpp
 
-CMakeFiles/PyFi.dir/src/Bond.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PyFi.dir/src/Bond.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nik/Apps/PyFi/src/Bond.cpp > CMakeFiles/PyFi.dir/src/Bond.cpp.i
+CMakeFiles/PyFi.dir/src/bond.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PyFi.dir/src/bond.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nik/Apps/PyFi/src/bond.cpp > CMakeFiles/PyFi.dir/src/bond.cpp.i
 
-CMakeFiles/PyFi.dir/src/Bond.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PyFi.dir/src/Bond.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nik/Apps/PyFi/src/Bond.cpp -o CMakeFiles/PyFi.dir/src/Bond.cpp.s
+CMakeFiles/PyFi.dir/src/bond.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PyFi.dir/src/bond.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nik/Apps/PyFi/src/bond.cpp -o CMakeFiles/PyFi.dir/src/bond.cpp.s
+
+CMakeFiles/PyFi.dir/src/option.cpp.o: CMakeFiles/PyFi.dir/flags.make
+CMakeFiles/PyFi.dir/src/option.cpp.o: /Users/nik/Apps/PyFi/src/option.cpp
+CMakeFiles/PyFi.dir/src/option.cpp.o: CMakeFiles/PyFi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/PyFi.dir/src/option.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PyFi.dir/src/option.cpp.o -MF CMakeFiles/PyFi.dir/src/option.cpp.o.d -o CMakeFiles/PyFi.dir/src/option.cpp.o -c /Users/nik/Apps/PyFi/src/option.cpp
+
+CMakeFiles/PyFi.dir/src/option.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PyFi.dir/src/option.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nik/Apps/PyFi/src/option.cpp > CMakeFiles/PyFi.dir/src/option.cpp.i
+
+CMakeFiles/PyFi.dir/src/option.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PyFi.dir/src/option.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nik/Apps/PyFi/src/option.cpp -o CMakeFiles/PyFi.dir/src/option.cpp.s
 
 # Object files for target PyFi
 PyFi_OBJECTS = \
-"CMakeFiles/PyFi.dir/src/Bond.cpp.o"
+"CMakeFiles/PyFi.dir/src/bond.cpp.o" \
+"CMakeFiles/PyFi.dir/src/option.cpp.o"
 
 # External object files for target PyFi
 PyFi_EXTERNAL_OBJECTS =
 
-libPyFi.a: CMakeFiles/PyFi.dir/src/Bond.cpp.o
+libPyFi.a: CMakeFiles/PyFi.dir/src/bond.cpp.o
+libPyFi.a: CMakeFiles/PyFi.dir/src/option.cpp.o
 libPyFi.a: CMakeFiles/PyFi.dir/build.make
 libPyFi.a: CMakeFiles/PyFi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPyFi.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nik/Apps/PyFi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libPyFi.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/PyFi.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PyFi.dir/link.txt --verbose=$(VERBOSE)
 
