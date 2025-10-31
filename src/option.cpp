@@ -48,5 +48,27 @@ namespace pyfi::option {
     return call_price + (strike_price * std::exp(-(risk_free_rate*time))) - stock_price;
   }
 
+  std::vector<double> call_payoff(const std::vector<double>& spot_rates, const double strike_price) {
+    const auto vec_size = spot_rates.size();
+    std::vector<double> maximum(vec_size);
+
+    for (auto i = 0; i < vec_size; i++) {
+      maximum[i] = std::max(spot_rates[i]-strike_price, 0.0);
+    }
+
+    return maximum;
+  }
+
+  std::vector<double> put_payoff(const std::vector<double>& spot_rates, const double strike_price) {
+    const auto vec_size = spot_rates.size();
+    std::vector<double> maximum(vec_size);
+
+    for (auto i = 0; i < vec_size; i++) {
+      maximum[i] = std::max(strike_price - spot_rates[i], 0.0);
+    }
+
+    return maximum;
+  }
+
 
 } //namespace pyfi::option

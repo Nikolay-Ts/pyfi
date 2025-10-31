@@ -5,8 +5,8 @@
 #ifndef OPTION_H
 #define OPTION_H
 
-#include <concepts>
-#include <cmath>
+#include <functional>
+#include <vector>
 
 namespace pyfi::option {
 
@@ -60,6 +60,43 @@ namespace pyfi::option {
       double volatility,
       double risk_free_rate,
       double time
+  );
+
+  /**
+   *
+   *  This is the payoff function which shows if the option holder will
+   *  exercise their call option right. This is given by
+   * max(spot_rates-strike_price, 0) These functions are as helpers to the user,
+   * but the user can implement their own payoff function.
+   *
+   * @param spot_rates
+   * @param strike_price
+   * @return spot_rates - strike_price if the user will exercise their by option
+   */
+  std::vector<double> call_payoff(const std::vector<double>& spot_rates, double strike_price);
+
+
+  /**
+   *
+   *  This is the payoff function which shows if the option holder will
+   *  exercise their put option right. This is given by max(strike_price-spot_rates, 0).
+   *  These functions are as helpers to the user, but the user can implement their
+   *  own payoff function.
+   *
+   * @param spot_rates
+   * @param strike_price
+   * @return strike_price - spot_rates if the user will exercise their by option
+   */
+  std::vector<double> put_payoff(const std::vector<double>& spot_rates, double strike_price);
+
+
+  double binomial_eu_option(
+    double stock_price,
+    double strike_price,
+    double volatility,
+    double risk_free_rate,
+    double time,
+    std::function<std::vector<double>(const std::vector<double>&, double)>& payoff
   );
 
 } // namespace pyfi::option
