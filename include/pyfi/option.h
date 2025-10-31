@@ -11,6 +11,12 @@
 namespace pyfi::option {
 
   /**
+   * custom type for the binomial tree function as it needs a function pointer
+   * for the putt-call functions
+   */
+  using payoff_func = void(*)(std::vector<double>&, double);
+
+  /**
    *
    * Gives the probability of some normalised random variable x in a
    * Gaussian distr.
@@ -18,7 +24,7 @@ namespace pyfi::option {
    * @param x the normalised variable
    * @return the resolve of the integral of the gaussian distr.
    */
-  inline double Phi(double x);
+  double Phi(double x);
 
   /**
    *
@@ -73,30 +79,66 @@ namespace pyfi::option {
    * @param strike_price
    * @return spot_rates - strike_price if the user will exercise their by option
    */
-  std::vector<double> call_payoff(const std::vector<double>& spot_rates, double strike_price);
+  void call_payoff(std::vector<double>& spot_rates, double strike_price);
 
 
   /**
    *
    *  This is the payoff function which shows if the option holder will
-   *  exercise their put option right. This is given by max(strike_price-spot_rates, 0).
-   *  These functions are as helpers to the user, but the user can implement their
-   *  own payoff function.
+   *  exercise their put option right. This is given by
+   * max(strike_price-spot_rates, 0). These functions are as helpers to the
+   * user, but the user can implement their own payoff function.
    *
    * @param spot_rates
    * @param strike_price
    * @return strike_price - spot_rates if the user will exercise their by option
    */
-  std::vector<double> put_payoff(const std::vector<double>& spot_rates, double strike_price);
+  void put_payoff(std::vector<double>& spot_rates, double strike_price);
 
+  /**
+   * a function helper that does the initialisation and calculation of
+   * the tree option prices. This is done to avoid code duplication
+   * for the US and EU implementations of binomial tree option pricing
+   *
+   * @param stock_price
+   * @param strike_price
+   * @param volatility
+   * @param steps
+   * @param time
+   * @param payoff
+   * @return the options stock prices along for each tree node
+   */
+  std::vector<double> binomial_tree_setup(
+    double stock_price,
+    double strike_price,
+    double volatility,
+    int steps,
+    double time,
+    payoff_func payoff
+  );
 
+  /**
+   *
+   *  calculates the call/put European option price from some underlying asset
+   *
+   * @param stock_price
+   * @param strike_price
+   * @param volatility
+   * @param risk_free_rate
+   * @param steps the amount of steps the stock has gone up or down by until the
+   * maturity
+   * @param time time to maturity
+   * @param payoff the put or cal or custom function
+   * @return
+   */
   double binomial_eu_option(
     double stock_price,
     double strike_price,
     double volatility,
     double risk_free_rate,
+    int steps,
     double time,
-    std::function<std::vector<double>(const std::vector<double>&, double)>& payoff
+    payoff_func payoff
   );
 
 } // namespace pyfi::option

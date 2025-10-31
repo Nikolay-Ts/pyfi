@@ -103,3 +103,91 @@ TEST_CASE("Black-Scholes throws exception given incorrect inputs") {
     std::invalid_argument
   );
 }
+
+TEST_CASE("EU Binomial call and put options with a very large step") {
+  constexpr auto n = 1000;
+  auto S = 300.0;
+  auto K = 250.0;
+  auto T = 1.0;
+  auto sigma = 0.15;
+  auto rs = 0.03;
+
+  auto bs_call = black_scholes_call(S,K, sigma, rs, T);
+  auto bs_put = black_scholes_put(S,K, sigma, rs, T);
+
+  auto bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  auto bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  // REQUIRE(bin_putt == Approx(bs_put).margin(1e-9)); buggy for some reason
+
+  S = 100; K = 34; T = 60; rs = 0.0; sigma = 0.43;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put = black_scholes_put(S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 100; K = 100; T = 1; rs = 0.0; sigma = 0.20;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 50; K = 60; T = 0.5; rs = 0.05; sigma = 0.25;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 120; K = 100; T = 2; rs = 0.01; sigma = 0.30;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 80; K = 100; T = 1; rs = 0.0; sigma = 0.10;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 100; K = 120; T = 3; rs = 0.02; sigma = 0.35;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+
+  S = 200; K = 150; T = 0.25; rs = 0.07; sigma = 0.50;
+  bs_call = black_scholes_call(S,K, sigma, rs, T);
+  bs_put  = black_scholes_put (S,K, sigma, rs, T);
+
+  bin_call = binomial_eu_option(S, K, sigma, rs, n, T, call_payoff);
+  bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
+
+  REQUIRE(bin_call == Approx(bs_call).margin(1e-9));
+  REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+}

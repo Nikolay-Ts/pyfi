@@ -1002,6 +1002,7 @@ test/CMakeFiles/test_bond.dir/test_bond.cpp.o: /Users/nik/Apps/PyFi/test/test_bo
   _deps/catch2-build/generated-includes/catch2/catch_user_config.hpp \
   _deps/catch2-src/src/catch2/benchmark/catch_clock.hpp \
   _deps/catch2-src/src/catch2/benchmark/detail/catch_benchmark_stats_fwd.hpp \
+  _deps/catch2-src/src/catch2/catch_approx.hpp \
   _deps/catch2-src/src/catch2/catch_assertion_info.hpp \
   _deps/catch2-src/src/catch2/catch_message.hpp \
   _deps/catch2-src/src/catch2/catch_section_info.hpp \
@@ -1040,10 +1041,8 @@ test/CMakeFiles/test_bond.dir/test_bond.cpp.o: /Users/nik/Apps/PyFi/test/test_bo
   _deps/catch2-src/src/catch2/internal/catch_unique_name.hpp \
   _deps/catch2-src/src/catch2/internal/catch_unique_ptr.hpp \
   _deps/catch2-src/src/catch2/internal/catch_void_type.hpp \
-  /Users/nik/Apps/PyFi/include/pyfi/Bond.h
+  /Users/nik/Apps/PyFi/include/pyfi/bond.h
 
-
-/Users/nik/Apps/PyFi/include/pyfi/Bond.h:
 
 _deps/catch2-src/src/catch2/internal/catch_unique_ptr.hpp:
 
@@ -1866,6 +1865,8 @@ _deps/catch2-src/src/catch2/catch_assertion_info.hpp:
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/c++/v1/__algorithm/sample.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/c++/v1/__iterator/projected.h:
+
+/Users/nik/Apps/PyFi/include/pyfi/bond.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/c++/v1/__charconv/to_chars_result.h:
 
@@ -3052,6 +3053,8 @@ _deps/catch2-src/src/catch2/interfaces/catch_interfaces_enum_values_registry.hpp
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/_types.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/c++/v1/__format/format_functions.h:
+
+_deps/catch2-src/src/catch2/catch_approx.hpp:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/usr/include/assert.h:
 

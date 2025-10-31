@@ -1003,6 +1003,7 @@ test/CMakeFiles/test_bond.dir/test_bond.cpp.o
  /Users/nik/Apps/PyFi/build/_deps/catch2-build/generated-includes/catch2/catch_user_config.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/benchmark/catch_clock.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/benchmark/detail/catch_benchmark_stats_fwd.hpp
+ /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/catch_approx.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/catch_assertion_info.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/catch_message.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/catch_section_info.hpp
@@ -1041,5 +1042,5 @@ test/CMakeFiles/test_bond.dir/test_bond.cpp.o
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/internal/catch_unique_name.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/internal/catch_unique_ptr.hpp
  /Users/nik/Apps/PyFi/build/_deps/catch2-src/src/catch2/internal/catch_void_type.hpp
- /Users/nik/Apps/PyFi/include/pyfi/Bond.h
+ /Users/nik/Apps/PyFi/include/pyfi/bond.h
 
