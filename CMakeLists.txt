@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(PyFi LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
-#set(CMAKE_CXX_CLANG_TIDY ".clang-analyzer-*g-tidy;-format-style=file")
+add_compile_options(-Wall -Wextra -Wpedantic)
 
 include(FetchContent)
 include(CTest)
