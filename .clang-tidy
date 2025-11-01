@@ -1,38 +1,79 @@
-Checks: >
-  -*,
-  bugprone-*,
-  clang-analyzer-*,
-  cppcoreguidelines-*,
-  modernize-*,
-  performance-*,
-  portability-*,
-  readability-*,
-  misc-*,
-  google-default-arguments,
-  google-explicit-constructor,
-  google-runtime-references,
-  -readability-identifier-naming,
-  -readability-magic-numbers,
-  -cppcoreguidelines-avoid-magic-numbers
+# Generated from CLion C/C++ Code Style settings
+---
+Language: Cpp
 
-HeaderFilterRegex: '.*'
-AnalyzeTemporaryDtors: true
-FormatStyle: none
-ExtraArgs: ['-std=c++20']
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignOperands: false
+AlignTrailingComments: false
+AlwaysBreakTemplateDeclarations: Yes
 
-CheckOptions:
-  # Always require braces for single-line control statements.
-  - key: readability-braces-around-statements.ShortStatementLines
-    value: '0'
+BinPackParameters: false
+AllowAllParametersOfDeclarationOnNextLine: false
 
-  # Encourage `auto` for verbose types (helps with Armadillo, Boost, etc.).
-  - key: modernize-use-auto.MinTypeNameLength
-    value: '7'
+BinPackArguments: false
+AllowAllArgumentsOnNextLine: false
 
-  # Prefer [[nodiscard]] on suitable functions.
-  - key: modernize-use-nodiscard.NodiscardSpelling
-    value: '[[nodiscard]]'
+AlignAfterOpenBracket: DontAlign
+PenaltyBreakBeforeFirstCallParameter: 0
+PenaltyBreakOpenParenthesis: 0
 
-  # Be less noisy about function-like macros in tests if needed.
-  - key: cppcoreguidelines-macro-usage.IgnoreCommandLineMacros
-    value: '1'
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: None
+
+
+
+
+# --- General style ---
+ReferenceAlignment: Left
+SpaceBeforeParens: ControlStatements
+SortIncludes: true
+ReflowComments: true
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakConstructorInitializers: AfterColon
+
+
+BreakConstructorInitializersBeforeComma: false
+ColumnLimit: 120
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+IncludeCategories:
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentCaseBlocks: true
+IndentWidth: 4
+InsertNewlineAtEOF: true
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+MaxEmptyLinesToKeep: 2
+NamespaceIndentation: All
+PointerAlignment: Left
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInConditionalStatement: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+TabWidth: 4
+...
