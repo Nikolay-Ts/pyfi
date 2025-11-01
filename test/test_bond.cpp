@@ -2,9 +2,9 @@
 // Created by Nikolay Tsonev on 23/10/2025.
 //
 
-#include <iostream>
-#include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <iostream>
 
 #include "pyfi/bond.h"
 
@@ -57,7 +57,7 @@ TEST_CASE("General cash-flow path equals manual discounting") {
 
     std::vector<double> flows{10.0, 10.0, 1010.0};
     const double pv_manual = 10.0 / 1.05 + 10.0 / std::pow(1.05, 2) + 1010.0 / std::pow(1.05, 3);
-    const double pv_func = present_value<double>(flows, y, 0.0, years, m, /*same*/false);
+    const double pv_func = present_value<double>(flows, y, 0.0, years, m, /*same*/ false);
     REQUIRE(pv_func == Approx(pv_manual).margin(1e-12));
 }
 
@@ -65,18 +65,18 @@ TEST_CASE("Redemption auto-added when flows shorter than tenor") {
     const double par = 1000.0, y = 0.05;
     const int years = 3, m = 1;
 
-    const double pv = present_value<double>({}, y, par, years, m, /*same*/false);
-    REQUIRE(pv == Approx(1000.0 / std::pow(1.05, 3)).margin(1e-12));  // ~863.837598531476
+    const double pv = present_value<double>({}, y, par, years, m, /*same*/ false);
+    REQUIRE(pv == Approx(1000.0 / std::pow(1.05, 3)).margin(1e-12)); // ~863.837598531476
 }
 
 TEST_CASE("Monotonicity: PV decreases as yield rises") {
     const double par = 1000.0;
     const int years = 10, m = 1;
     const double c = par * 0.08;
-    const double pv_low  = present_value<double>({c}, 0.07, par, years, m, true); // ~1070.2358
+    const double pv_low = present_value<double>({c}, 0.07, par, years, m, true); // ~1070.2358
     const double pv_high = present_value<double>({c}, 0.09, par, years, m, true); // ~935.8234
-    REQUIRE(pv_low  > pv_high);
-    REQUIRE(pv_low  == Approx(1070.235815409326).margin(1e-9));
+    REQUIRE(pv_low > pv_high);
+    REQUIRE(pv_low == Approx(1070.235815409326).margin(1e-9));
     REQUIRE(pv_high == Approx(935.8234229884099).margin(1e-9));
 }
 
@@ -87,39 +87,39 @@ TEST_CASE("Invalid inputs throw") {
 }
 
 TEST_CASE("IRR: par bond -> yield equals coupon", "[irr]") {
-  using T = double;
-  const int years = 5, m = 1;
-  const T par = 1000;
-  const T coupon = 0.06;
+    using T = double;
+    const int years = 5, m = 1;
+    const T par = 1000;
+    const T coupon = 0.06;
 
-  const auto cfs = build_bond_cashflows(par, coupon, years, m);
-  const T price = par;  // at par when y == coupon
+    const auto cfs = build_bond_cashflows(par, coupon, years, m);
+    const T price = par; // at par when y == coupon
 
-  const T irr = internal_rate_return<T>(cfs, price, /*interest_rate=*/coupon, par, years, m);
+    const T irr = internal_rate_return<T>(cfs, price, /*interest_rate=*/coupon, par, years, m);
 
-  REQUIRE(irr == Approx(coupon).epsilon(1e-12));
-  REQUIRE(price_from_yield(cfs, irr, m) == Approx(price).epsilon(1e-12));
+    REQUIRE(irr == Approx(coupon).epsilon(1e-12));
+    REQUIRE(price_from_yield(cfs, irr, m) == Approx(price).epsilon(1e-12));
 }
 
 TEST_CASE("IRR: premium/discount bond", "[irr]") {
-  using T = double;
-  const int years = 7, m = 1;
-  const T par = 1000;
-  const T coupon = 0.06;  // 6% coupon
+    using T = double;
+    const int years = 7, m = 1;
+    const T par = 1000;
+    const T coupon = 0.06; // 6% coupon
 
-  const auto cfs = build_bond_cashflows(par, coupon, years, m);
+    const auto cfs = build_bond_cashflows(par, coupon, years, m);
 
-  {
-    const T y_true = 0.07;
-    const T price = price_from_yield(cfs, y_true, m);
-    const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
-    REQUIRE(irr == Approx(y_true).epsilon(1e-10));
-  }
+    {
+        const T y_true = 0.07;
+        const T price = price_from_yield(cfs, y_true, m);
+        const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
+        REQUIRE(irr == Approx(y_true).epsilon(1e-10));
+    }
 
-  {
-    const T y_true = 0.05;
-    const T price = price_from_yield(cfs, y_true, m);
-    const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
-    REQUIRE(irr == Approx(y_true).epsilon(1e-10));
-  }
+    {
+        const T y_true = 0.05;
+        const T price = price_from_yield(cfs, y_true, m);
+        const T irr = internal_rate_return<T>(cfs, price, coupon, par, years, m);
+        REQUIRE(irr == Approx(y_true).epsilon(1e-10));
+    }
 }
