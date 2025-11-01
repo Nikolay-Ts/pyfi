@@ -1,5 +1,0 @@
-if(EXISTS "/Users/nik/Apps/PyFi/build/test/test_bond-b12d07c_tests.cmake")
-  include("/Users/nik/Apps/PyFi/build/test/test_bond-b12d07c_tests.cmake")
-else()
-  add_test(test_bond_NOT_BUILT-b12d07c test_bond_NOT_BUILT-b12d07c)
-endif()
