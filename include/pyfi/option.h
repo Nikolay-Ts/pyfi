@@ -5,11 +5,10 @@
 #ifndef OPTION_H
 #define OPTION_H
 
-#include <functional>
 #include <vector>
 
-namespace pyfi::option {
-
+namespace pyfi::option
+{
     /**
      * custom type for the binomial tree function as it needs a function pointer
      * for the putt-call functions
@@ -99,11 +98,11 @@ namespace pyfi::option {
      * @return the options stock prices along for each tree node
      */
     std::vector<double> binomial_tree_setup(double stock_price,
-        double strike_price,
-        double volatility,
-        int steps,
-        double time,
-        payoff_func payoff);
+                                            double strike_price,
+                                            double volatility,
+                                            int steps,
+                                            double time,
+                                            payoff_func payoff);
 
     /**
      *
@@ -120,13 +119,12 @@ namespace pyfi::option {
      * @return
      */
     double binomial_eu_option(double stock_price,
-        double strike_price,
-        double volatility,
-        double risk_free_rate,
-        int steps,
-        double time,
-        payoff_func payoff);
-
+                              double strike_price,
+                              double volatility,
+                              double risk_free_rate,
+                              int steps,
+                              double time,
+                              payoff_func payoff);
 } // namespace pyfi::option
 
 #endif // OPTION_H
