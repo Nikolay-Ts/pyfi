@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(PyFi LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
-add_compile_options(-Wall -Wextra -Wpedantic)
 
 include(FetchContent)
 include(CTest)
@@ -21,13 +20,14 @@ FetchContent_MakeAvailable(Catch2)
 find_package(Boost 1.74 REQUIRED)
 
 add_library(
-    PyFi STATIC
-        src/Bond.cpp
+        PyFi STATIC
+        src/bond.cpp
+        src/option.cpp
 )
 target_include_directories(
-    PyFi PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+        PyFi PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 set_target_properties(PyFi PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
