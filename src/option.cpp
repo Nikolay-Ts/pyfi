@@ -116,5 +116,31 @@ namespace pyfi::option {
         return options[0];
     }
 
+    double binomial_us_option(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const int steps,
+        const double time,
+        const payoff_func payoff) {
+
+        const auto dt = time / steps;
+        const auto u = std::exp(volatility * std::sqrt(dt));
+        const auto d = 1.0 / u;
+        const auto fair_prob = (std::exp(risk_free_rate * dt) - d) / (u - d);
+        const auto discr = std::exp(-(risk_free_rate * dt));
+        auto options = binomial_tree_setup(stock_price, strike_price, volatility, steps, time, payoff);
+
+        for (int i = steps; i > 0; i--) {
+            auto stocks = binomial_tree_setup(stock_price, strike_price, volatility, steps, time, payoff);
+            for (int j = 0; j < i; ++j) {
+                options[j] =
+                    std::max(discr * (fair_prob * options[j + 1] + (1.0 - fair_prob) * options[j]), stocks[i]);
+            }
+        }
+
+        return options[0];
+    }
+
 
 } // namespace pyfi::option

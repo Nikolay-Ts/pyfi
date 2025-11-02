@@ -7,8 +7,7 @@
 
 #include <vector>
 
-namespace pyfi::option
-{
+namespace pyfi::option {
     /**
      * custom type for the binomial tree function as it needs a function pointer
      * for the putt-call functions
@@ -23,7 +22,7 @@ namespace pyfi::option
      * @param x the normalised variable
      * @return the resolve of the integral of the gaussian distr.
      */
-    double Phi(double x);
+    constexpr double Phi(double x);
 
     /**
      *
@@ -98,11 +97,11 @@ namespace pyfi::option
      * @return the options stock prices along for each tree node
      */
     std::vector<double> binomial_tree_setup(double stock_price,
-                                            double strike_price,
-                                            double volatility,
-                                            int steps,
-                                            double time,
-                                            payoff_func payoff);
+        double strike_price,
+        double volatility,
+        int steps,
+        double time,
+        payoff_func payoff);
 
     /**
      *
@@ -119,12 +118,35 @@ namespace pyfi::option
      * @return
      */
     double binomial_eu_option(double stock_price,
-                              double strike_price,
-                              double volatility,
-                              double risk_free_rate,
-                              int steps,
-                              double time,
-                              payoff_func payoff);
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        int steps,
+        double time,
+        payoff_func payoff);
+
+
+    /**
+     *
+     *  calculates the call/put American option price from some underlying asset
+     *
+     * @param stock_price
+     * @param strike_price
+     * @param volatility
+     * @param risk_free_rate
+     * @param steps the amount of steps the stock has gone up or down by until the
+     * maturity
+     * @param time time to maturity
+     * @param payoff the put or cal or custom function
+     * @return
+     */
+    double binomial_us_option(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        int steps,
+        double time,
+        payoff_func payoff);
 } // namespace pyfi::option
 
 #endif // OPTION_H
