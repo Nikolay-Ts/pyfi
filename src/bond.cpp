@@ -174,4 +174,65 @@ namespace pyfi::bond {
 
     template long double price_from_yield<long double>(const std::vector<long double>&, long double, int);
 
+
+    template <std::floating_point T>
+    T zero_coupon_price(T par_value, T annual_yield, T years_to_maturity, int m) {
+        if (!(par_value > T{0}))          throw std::invalid_argument("par_value must be > 0");
+        if (!(years_to_maturity >= T{0})) throw std::invalid_argument("years_to_maturity must be >= 0");
+        if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
+        const int years_int = static_cast<int>(years_to_maturity);
+        return zero_coupon_price_cexpr<T>(par_value, annual_yield, years_int, m);
+    }
+
+    template <std::floating_point T>
+    T coupon_bond_price(T par_value, T coupon_rate, T annual_yield, T years_to_maturity, int m) {
+        if (!(par_value > T{0}))          throw std::invalid_argument("par_value must be > 0");
+        if (!(coupon_rate >= T{0}))       throw std::invalid_argument("coupon_rate must be >= 0");
+        if (!(years_to_maturity >= T{0})) throw std::invalid_argument("years_to_maturity must be >= 0");
+        if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
+        const int years_int = static_cast<int>(years_to_maturity);
+        return coupon_bond_price_cexpr<T>(par_value, coupon_rate, annual_yield, years_int, m);
+    }
+
+
+    template float       zero_coupon_price<float>(float, float, float, int);
+    template double      zero_coupon_price<double>(double, double, double, int);
+    template long double zero_coupon_price<long double>(long double, long double, long double, int);
+
+    template float       coupon_bond_price<float>(float, float, float, float, int);
+    template double      coupon_bond_price<double>(double, double, double, double, int);
+    template long double coupon_bond_price<long double>(long double, long double, long double, long double, int);
+
+    // template <std::floating_point T>
+    // T zero_coupon_price(T par_value,
+    //                     T annual_yield,
+    //                     T years_to_maturity,
+    //                     int m)
+    // {
+    //     if (!(par_value > T{0}))          throw std::invalid_argument("par_value must be > 0");
+    //     if (!(years_to_maturity >= T{0})) throw std::invalid_argument("years_to_maturity must be >= 0");
+    //     if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
+    //     // negative annual_yield allowed
+
+    //     const T n      = static_cast<T>(m) * years_to_maturity;
+    //     const T per_r  = annual_yield / static_cast<T>(m);
+    //     return par_value / std::pow(T{1} + per_r, n);
+    // }
+
+    // template <std::floating_point T>
+    // T coupon_bond_price(T par_value,
+    //                     T coupon_rate,
+    //                     T annual_yield,
+    //                     T years_to_maturity,
+    //                     int m)
+    // {
+    //     if (!(par_value > T{0}))          throw std::invalid_argument("par_value must be > 0");
+    //     if (!(coupon_rate >= T{0}))       throw std::invalid_argument("coupon_rate must be >= 0");
+    //     if (!(years_to_maturity >= T{0})) throw std::invalid_argument("years_to_maturity must be >= 0");
+    //     if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
+
+    //     const auto cfs = build_bond_cashflows<T>(par_value, coupon_rate, years_to_maturity, m);
+    //     return price_from_yield<T>(cfs, annual_yield, m);
+    // }
+
 } // namespace pyfi::bond
