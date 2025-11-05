@@ -32,6 +32,7 @@ namespace pyfi::bond {
     T price_from_yield(const std::vector<T>& cash_flows, T yield, int m);
 
     constexpr double zero_coupon_price_cexpr(double par_value, double annual_yield, int years, int m) noexcept {
+        //m: compunding periods per year
         const int n = years * m;                
         const double per = annual_yield / static_cast<double>(m);
         const double base = 1.0 + per;
@@ -41,6 +42,7 @@ namespace pyfi::bond {
     }
 
     constexpr double coupon_bond_price_cexpr(double par_value, double coupon_rate, double annual_yield, int years, int m) noexcept {
+        //m: compounding periods per year
         const int n = years * m;
         const double per = annual_yield / static_cast<double>(m);
         const double base = 1.0 + per;
