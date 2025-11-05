@@ -123,3 +123,66 @@ TEST_CASE("IRR: premium/discount bond", "[irr]") {
         REQUIRE(irr == Approx(y_true).epsilon(1e-10));
     }
 }
+
+TEST_CASE("Forward value (continuous compounding): baseline check") {
+    const double P0 = 950.0;
+    const double r  = 0.05;
+    const double T  = 2.0;
+
+    const double expected = P0 * std::exp(r * T);
+    const double got = forward_value(P0, r, T);
+
+    REQUIRE(got == Approx(expected).epsilon(1e-12));
+}
+
+TEST_CASE("Forward value: zero rate and zero time edge cases") {
+    const double P0 = 1234.56;
+
+    // Zero rate -> no growth for any T
+    for (double T : {0.0, 1.0, 5.0}) {
+        REQUIRE(forward_value(P0, 0.0, T) == Approx(P0).epsilon(1e-12));
+    }
+
+    // Zero time -> immediate delivery, regardless of rate
+    for (double r : {0.0, 0.01, 0.05, 0.20}) {
+        REQUIRE(forward_value(P0, r, 0.0) == Approx(P0).epsilon(1e-12));
+    }
+}
+
+TEST_CASE("Forward value: monotonicity in rate and time") {
+    const double P0 = 1000.0;
+
+    // Monotonic in rate for fixed T
+    {
+        const double T = 3.0;
+        const double f_low  = forward_value(P0, 0.02, T);
+        const double f_mid  = forward_value(P0, 0.05, T);
+        const double f_high = forward_value(P0, 0.08, T);
+        REQUIRE(f_low  < f_mid);
+        REQUIRE(f_mid  < f_high);
+    }
+
+    // Monotonic in time for fixed r
+    {
+        const double r = 0.05;
+        const double f_short = forward_value(P0, r, 1.0);
+        const double f_long  = forward_value(P0, r, 5.0);
+        REQUIRE(f_short < f_long);
+    }
+}
+
+TEST_CASE("Forward value matches discrete compounding in the limit") {
+    const double P0 = 777.77;
+    const double r  = 0.073;  // 7.3% annual
+    const double T  = 2.5;    // 2.5 years
+
+    const double cont = forward_value(P0, r, T); // Continuous compounding: P0 * e^{rT}
+
+    // Very high-frequency discrete compounding should approximate continuous
+    const int m = 10000; // compounding periods per year
+    // use exp and log1p for stability
+    const double disc = P0 * std::exp((m * T) * std::log1p(r / m));
+
+    // Relax epsilon slightly, because the error is O(1/m)
+    REQUIRE(disc == Approx(cont).epsilon(1e-6));
+}
