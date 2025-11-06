@@ -116,6 +116,12 @@ namespace pyfi::option {
         return options[0];
     }
 
+    inline double eval_payoff_scalar(const double S, const double K, const payoff_func& payoff) {
+        std::vector<double> tmp{S};
+        payoff(tmp, K);
+        return tmp[0];
+    }
+
     double binomial_us_option(const double stock_price,
         const double strike_price,
         const double volatility,
@@ -129,13 +135,18 @@ namespace pyfi::option {
         const auto d = 1.0 / u;
         const auto fair_prob = (std::exp(risk_free_rate * dt) - d) / (u - d);
         const auto discr = std::exp(-(risk_free_rate * dt));
+
         auto options = binomial_tree_setup(stock_price, strike_price, volatility, steps, time, payoff);
 
-        for (int i = steps; i > 0; i--) {
-            auto stocks = binomial_tree_setup(stock_price, strike_price, volatility, steps, time, payoff);
-            for (int j = 0; j < i; ++j) {
-                options[j] =
-                    std::max(discr * (fair_prob * options[j + 1] + (1.0 - fair_prob) * options[j]), stocks[i]);
+        for (int i = steps - 1; i >= 0; --i) {
+            for (int j = 0; j <= i; ++j) {
+                const double cont = discr * (fair_prob * options[j + 1] + (1.0 - fair_prob) * options[j]);
+
+                // node stock price S(i,j) = S0 * u^j * d^(i-j)
+                const double Sij = stock_price * std::pow(u, j) * std::pow(d, i - j);
+
+                const double early_exercise = eval_payoff_scalar(Sij, strike_price, payoff);
+                options[j] = std::max(cont, early_exercise);
             }
         }
 

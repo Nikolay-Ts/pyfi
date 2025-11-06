@@ -22,7 +22,7 @@ namespace pyfi::option {
      * @param x the normalised variable
      * @return the resolve of the integral of the gaussian distr.
      */
-    constexpr double Phi(double x);
+    double Phi(double x);
 
     /**
      *
