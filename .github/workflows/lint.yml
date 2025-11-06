@@ -9,23 +9,35 @@ permissions:
 
 jobs:
   clang-format:
-    if: github.event.pull_request.draft == false
+    if: ${{ github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install clang-format
+        with:
+          fetch-depth: 0
+
+      - name: Install clang-format 17
         run: |
           sudo apt-get update
           sudo apt-get install -y clang-format-17
-      - name: Check formatting
+
+      - name: Show version
+        run: clang-format-17 --version
+
+      - name: Ensure .clang-format exists
+        run: |
+          test -f .clang-format || { echo "::error::.clang-format missing at repo root"; exit 1; }
+
+      - name: Check formatting (no writes)
         shell: bash
         run: |
-          set -e
-          files=$(git ls-files '*.c' '*.cc' '*.cpp' '*.cxx' '*.h' '*.hh' '*.hpp')
-          [ -z "$files" ] && exit 0
-          clang-format-17 -i $files
-          if ! git diff --quiet; then
-            echo "::error::Code not formatted. Run clang-format locally."
-            git --no-pager diff --name-only
-            exit 1
+          set -euo pipefail
+          # Exit early if no C/C++ sources
+          if ! git ls-files -z -- '*.c' '*.cc' '*.cpp' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx' | grep -q .; then
+            echo "No C/C++ files to check."
+            exit 0
           fi
+
+          # Validate formatting without modifying files
+          git ls-files -z -- '*.c' '*.cc' '*.cpp' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx' \
+            | xargs -0 -n50 -P4 clang-format-17 -n --Werror --style=file
