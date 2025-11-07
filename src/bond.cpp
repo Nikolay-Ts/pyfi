@@ -174,4 +174,23 @@ namespace pyfi::bond {
 
     template long double price_from_yield<long double>(const std::vector<long double>&, long double, int);
 
+    static inline void validate_common(double par_value, double years_to_maturity, int m)
+    {
+        if (!(par_value > 0.0))          throw std::invalid_argument("par_value must be > 0");
+        if (!(years_to_maturity >= 0.0)) throw std::invalid_argument("years_to_maturity must be >= 0");
+        if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
+    }
+
+    double zero_coupon_price(double par_value, double annual_yield, double years_to_maturity, int m) {
+        validate_common(par_value, years_to_maturity, m);
+        const int years_int = static_cast<int>(years_to_maturity);
+        return zero_coupon_price_cexpr(par_value, annual_yield, years_int, m);
+    }
+
+    double coupon_bond_price(double par_value, double coupon_rate, double annual_yield, double years_to_maturity, int m) {
+        validate_common(par_value, years_to_maturity, m);
+        const int years_int = static_cast<int>(years_to_maturity);
+        return coupon_bond_price_cexpr(par_value, coupon_rate, annual_yield, years_int, m);
+    }
+
 } // namespace pyfi::bond
