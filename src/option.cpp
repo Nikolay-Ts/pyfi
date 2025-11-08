@@ -2,16 +2,28 @@
 // Created by Nikolay Tsonev on 30/10/2025.
 //
 
-#include "../include/pyfi/option.h"
 #include <boost/math/distributions/normal.hpp>
+
+#include "../include/pyfi/option.h"
 
 
 namespace pyfi::option {
 
-
     inline double Phi(const double x) {
         static const boost::math::normal Z(0.0, 1.0);
         return boost::math::cdf(Z, x);
+    }
+
+    constexpr double black_scholes_x(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double time) {
+
+        const auto numerator = std::log(stock_price / strike_price) +
+            (risk_free_rate + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
+
+        return (numerator / (volatility * std::sqrt(time)));
     }
 
     double black_scholes_call(const double stock_price,
@@ -23,11 +35,7 @@ namespace pyfi::option {
             throw std::invalid_argument("Time or volatility cannot be zero");
         }
 
-        // compute our x
-        const auto numerator = std::log(stock_price / strike_price) +
-            (risk_free_rate + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
-        const auto x = numerator / (volatility * std::sqrt(time));
-
+        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
         const auto s_phi = stock_price * Phi(x);
         const auto k_phi = strike_price * std::exp(-(risk_free_rate * time)) * Phi(x - volatility * std::sqrt(time));
 
@@ -51,6 +59,51 @@ namespace pyfi::option {
 
         const double pvK = strike_price * std::exp(-risk_free_rate * time);
         return pvK * Phi(-d2) - stock_price * Phi(-d1);
+    }
+
+    constexpr double custom_normal(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double time) {
+        constexpr auto one_pi = 1.0 / (std::pow(boost::math::constants::pi * 2, 1 / 2));
+        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
+        const auto exp = std::exp(std::pow(-x, 2) / 2);
+
+        return one_pi * exp;
+    }
+
+    constexpr double bs_call_delta(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double dividend_yield,
+        const double time) {
+
+        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
+        return std::exp(-time) * n_x;
+    }
+
+    constexpr double bs_put_delta(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double time) {
+
+        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
+        return std::exp(-time) * (n_x - 1);
+    }
+
+    constexpr double bs_gamma(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double dividend_yield,
+        const double time) {
+
+        constexpr auto frac = std::exp(-time * dividend_yield) / (stock_price * volatility * std::pow(time, 1 / 2));
+        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
+        return frac * n_x;
     }
 
     void call_payoff(std::vector<double>& spot_rates, const double strike_price) {
