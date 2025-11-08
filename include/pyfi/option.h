@@ -89,6 +89,8 @@ namespace pyfi::option {
     constexpr double
     custom_normal(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
 
+    constexpr double custom_normal(double x);
+
     /**
      * calculates the first derivative of the call option w.r.t its underlying asset price
      *
@@ -138,6 +140,20 @@ namespace pyfi::option {
      * @return the first derivative of the put option price
      */
     constexpr double bs_gamma(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double dividend_yield,
+        double time);
+
+    constexpr double bs_call_theta(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double dividend_yield,
+        double time);
+
+    constexpr double bs_put_theta(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
