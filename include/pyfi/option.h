@@ -37,7 +37,7 @@ namespace pyfi::option {
      * @param time
      * @return price of the European call option
      */
-    constexpr double
+    double
     black_scholes_x(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
 
     /**
@@ -86,10 +86,10 @@ namespace pyfi::option {
      * @param time
      * @return custom normal distribution pdf
      */
-    constexpr double
+    double
     custom_normal(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
 
-    constexpr double custom_normal(double x);
+    double custom_normal(double x);
 
     /**
      * calculates the first derivative of the call option w.r.t its underlying asset price
@@ -102,7 +102,7 @@ namespace pyfi::option {
      * @param time
      * @return the first derivative of the call option price
      */
-    constexpr double bs_call_delta(double stock_price,
+    double bs_call_delta(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
@@ -120,7 +120,7 @@ namespace pyfi::option {
      * @param time
      * @return the first derivative of the option price
      */
-    constexpr double bs_put_delta(double stock_price,
+    double bs_put_delta(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
@@ -139,26 +139,83 @@ namespace pyfi::option {
      * @param time
      * @return the first derivative of the put option price
      */
-    constexpr double bs_gamma(double stock_price,
+    double bs_gamma(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
         double dividend_yield,
         double time);
 
-    constexpr double bs_call_theta(double stock_price,
+    double bs_call_theta(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
         double dividend_yield,
         double time);
 
-    constexpr double bs_put_theta(double stock_price,
+    double bs_put_theta(double stock_price,
         double strike_price,
         double volatility,
         double risk_free_rate,
         double dividend_yield,
         double time);
+
+    /**
+     *  Calculates the first derivative of an option price w.r.t the volatility of the underlying asset. This relation
+     *  is the same for call and put options.
+     *
+     * @param stock_price
+     * @param strike_price
+     * @param volatility
+     * @param risk_free_rate
+     * @param dividend_yield
+     * @param time
+     * @return
+     */
+    double bs_vega(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double dividend_yield,
+        double time);
+
+    /**
+     * Both put and call rho functions are identical, only difference is that the put function uses -x2. Therefore,
+     * this function will do the final calulation
+     *
+     * @param strike_price
+     * @param risk_free_rate
+     * @param time
+     * @param x2
+     * @return
+     */
+    double bs_rho_calculation(double strike_price, double risk_free_rate, double time, double x2);
+
+    /**
+     * Calculates the first derivative of the call option price w.r.t the interest rate of the underlying asset.
+     *
+     * @param stock_price
+     * @param strike_price
+     * @param volatility
+     * @param risk_free_rate
+     * @param time
+     * @return
+     */
+    double bs_call_rho(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+
+
+    /**
+     * Calculates the first derivative of the put option price w.r.t the interest rate of the underlying asset.
+     *
+     * @param stock_price
+     * @param strike_price
+     * @param volatility
+     * @param risk_free_rate
+     * @param time
+     * @return
+     */
+    double bs_put_rho(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+
 
     /**
      *

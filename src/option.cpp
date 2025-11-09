@@ -14,7 +14,7 @@ namespace pyfi::option {
         return boost::math::cdf(Z, x);
     }
 
-    constexpr double black_scholes_x(const double stock_price,
+    inline double black_scholes_x(const double stock_price,
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
@@ -61,67 +61,6 @@ namespace pyfi::option {
         return pvK * Phi(-d2) - stock_price * Phi(-d1);
     }
 
-    constexpr double custom_normal(const double stock_price,
-        const double strike_price,
-        const double volatility,
-        const double risk_free_rate,
-        const double time) {
-        constexpr auto one_pi = 1.0 / (std::pow(boost::math::constants::pi * 2, 1 / 2));
-        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
-        const auto exp = std::exp(std::pow(-x, 2) / 2);
-
-        return one_pi * exp;
-    }
-
-    constexpr double custom_normal(const double x) {
-        constexpr auto one_pi = 1.0 / (std::pow(boost::math::constants::pi * 2, 1 / 2));
-        const auto exp = std::exp(std::pow(-x, 2) / 2);
-        return one_pi * exp;
-    }
-
-    constexpr double bs_call_delta(const double stock_price,
-        const double strike_price,
-        const double volatility,
-        const double risk_free_rate,
-        const double dividend_yield,
-        const double time) {
-
-        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-time) * n_x;
-    }
-
-    constexpr double bs_put_delta(const double stock_price,
-        const double strike_price,
-        const double volatility,
-        const double risk_free_rate,
-        const double time) {
-
-        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-time) * (n_x - 1);
-    }
-
-    constexpr double bs_gamma(const double stock_price,
-        const double strike_price,
-        const double volatility,
-        const double risk_free_rate,
-        const double dividend_yield,
-        const double time) {
-
-        constexpr auto frac = std::exp(-time * dividend_yield) / (stock_price * volatility * std::pow(time, 1 / 2));
-        constexpr auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return frac * n_x;
-    }
-
-    constexpr double bs_call_theta(double stock_price,
-        double strike_price,
-        double volatility,
-        double risk_free_rate,
-        double dividend_yield,
-        double time) {
-
-
-        return 0.0;
-    }
 
     void call_payoff(std::vector<double>& spot_rates, const double strike_price) {
         const auto vec_size = spot_rates.size();
