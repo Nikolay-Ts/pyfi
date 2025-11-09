@@ -33,7 +33,7 @@ namespace pyfi::option {
         const double time) {
 
         const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-time * dividend_yield) * n_x;
+        return std::exp(-(time * dividend_yield)) * n_x;
     }
 
     double bs_put_delta(const double stock_price,
@@ -44,7 +44,7 @@ namespace pyfi::option {
         const double time) {
 
         const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-time * dividend_yield) * (n_x - 1);
+        return std::exp(-dividend_yield * time) * (n_x - 1.0);
     }
 
     double bs_gamma(const double stock_price,
@@ -54,7 +54,7 @@ namespace pyfi::option {
         const double dividend_yield,
         const double time) {
 
-        const auto frac = std::exp(-time * dividend_yield) / (stock_price * volatility * std::pow(time, 1 / 2));
+        const auto frac = std::exp(-(time * dividend_yield)) / (stock_price * volatility * std::pow(time, 1 / 2));
         const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
         return frac * n_x;
     }
@@ -118,7 +118,7 @@ namespace pyfi::option {
         return 1.0 / 100 * strike_price * time * std::exp(-(risk_free_rate * time)) * x2;
     }
 
-    inline double bs_call_rho(const double stock_price,
+    double bs_call_rho(const double stock_price,
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
@@ -129,7 +129,7 @@ namespace pyfi::option {
         return bs_rho_calculation(strike_price, risk_free_rate, time, x2);
     }
 
-    inline double bs_put_rho(const double stock_price,
+    double bs_put_rho(const double stock_price,
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
