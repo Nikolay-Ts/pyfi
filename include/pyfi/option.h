@@ -86,10 +86,9 @@ namespace pyfi::option {
      * @param time
      * @return custom normal distribution pdf
      */
-    double
-    custom_normal(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+    double norm_pdf(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
 
-    double custom_normal(double x);
+    double norm_pdf(double x);
 
     /**
      * calculates the first derivative of the call option w.r.t its underlying asset price

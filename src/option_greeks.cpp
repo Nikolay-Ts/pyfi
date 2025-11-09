@@ -7,22 +7,23 @@
 
 namespace pyfi::option {
 
-    double custom_normal(const double stock_price,
+    double norm_pdf(const double stock_price,
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
         const double time) {
-        const auto one_pi = 1.0 / (std::pow(M_PI * 2, 1 / 2));
         const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
-        const auto exp = std::exp(std::pow(-x, 2) / 2);
-
-        return one_pi * exp;
+        const double inv_sqrt_2pi = 1.0 / std::sqrt(2.0 * M_PI);
+        return inv_sqrt_2pi * std::exp(-0.5 * x * x);
     }
 
-    double custom_normal(const double x) {
-        const auto one_pi = 1.0 / (std::pow(M_PI * 2, 1 / 2));
-        const auto exp = std::exp(std::pow(-x, 2) / 2);
-        return one_pi * exp;
+    double norm_pdf(const double x) {
+        const double inv_sqrt_2pi = 1.0 / std::sqrt(2.0 * M_PI);
+        return inv_sqrt_2pi * std::exp(-0.5 * x * x);
+    }
+
+    inline double norm_cdf(const double x) {
+        return 0.5 * (1.0 + std::erf(x / std::sqrt(2.0)));
     }
 
     double bs_call_delta(const double stock_price,
@@ -31,9 +32,8 @@ namespace pyfi::option {
         const double risk_free_rate,
         const double dividend_yield,
         const double time) {
-
-        const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-(time * dividend_yield)) * n_x;
+        const double d1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
+        return std::exp(-dividend_yield * time) * norm_cdf(d1);
     }
 
     double bs_put_delta(const double stock_price,
@@ -43,8 +43,8 @@ namespace pyfi::option {
         const double dividend_yield,
         const double time) {
 
-        const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return std::exp(-dividend_yield * time) * (n_x - 1.0);
+        const double d1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
+        return std::exp(-dividend_yield * time) * norm_cdf(d1);
     }
 
     double bs_gamma(const double stock_price,
@@ -54,9 +54,8 @@ namespace pyfi::option {
         const double dividend_yield,
         const double time) {
 
-        const auto frac = std::exp(-(time * dividend_yield)) / (stock_price * volatility * std::pow(time, 1 / 2));
-        const auto n_x = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
-        return frac * n_x;
+        const double d1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
+        return std::exp(-dividend_yield * time) * (norm_pdf(d1) - 1.0);
     }
 
     double bs_call_theta(const double stock_price,
@@ -68,8 +67,8 @@ namespace pyfi::option {
 
         const auto x1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
         const auto x2 = x1 - volatility * std::pow(time, 1 / 2);
-        const auto n_x1 = custom_normal(x1);
-        const auto n_x2 = custom_normal(x2);
+        const auto n_x1 = norm_pdf(x1);
+        const auto n_x2 = norm_pdf(x2);
 
         const auto right_side = (risk_free_rate * stock_price * std::exp(-(risk_free_rate * time)) * n_x2) +
             (dividend_yield * strike_price * std::exp(-(dividend_yield * time)) * n_x1);
@@ -89,8 +88,8 @@ namespace pyfi::option {
 
         const auto x1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
         const auto x2 = x1 - volatility * std::pow(time, 1 / 2);
-        const auto n_x1 = custom_normal(x1);
-        const auto n_x2 = custom_normal(x2);
+        const auto n_x1 = norm_pdf(x1);
+        const auto n_x2 = norm_pdf(x2);
 
         const auto right_side = (risk_free_rate * stock_price * std::exp(-(risk_free_rate * time)) * n_x2) +
             (dividend_yield * strike_price * std::exp(-(dividend_yield * time)) * n_x1);
@@ -107,7 +106,7 @@ namespace pyfi::option {
         const double risk_free_rate,
         const double dividend_yield,
         const double time) {
-        const auto n_x1 = custom_normal(stock_price, strike_price, volatility, risk_free_rate, time);
+        const auto n_x1 = norm_pdf(stock_price, strike_price, volatility, risk_free_rate, time);
         const auto expo = std::exp(-(dividend_yield * time));
 
         return 1.0 / 100 * stock_price * expo * std::sqrt(time) * n_x1;
