@@ -2,7 +2,7 @@
 // Created by Nikolay Tsonev on 23/10/2025.
 //
 
-#include "../include/pyfi/bond.h"
+#include <pyfi/bond.h>
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -134,28 +134,103 @@ namespace pyfi::bond {
         return pv;
     }
 
-    static inline void validate_common(double par_value, double years_to_maturity, int m)
-    {
-        if (!(par_value > 0.0))          throw std::invalid_argument("par_value must be > 0");
-        if (!(years_to_maturity >= 0.0)) throw std::invalid_argument("years_to_maturity must be >= 0");
-        if (!(m > 0))                     throw std::invalid_argument("m must be > 0");
-    }
-
     double zero_coupon_price(double par_value, double annual_yield, double years_to_maturity, int m) {
-        validate_common(par_value, years_to_maturity, m);
-        const int years_int = static_cast<int>(years_to_maturity);
-        return zero_coupon_price_cexpr(par_value, annual_yield, years_int, m);
+        const double n = years_to_maturity * static_cast<double>(m);                
+        const double per = annual_yield / static_cast<double>(m);
+        return par_value / std::pow(1.0 + per, n);
     }
 
     double coupon_bond_price(double par_value, double coupon_rate, double annual_yield, double years_to_maturity, int m) {
-        validate_common(par_value, years_to_maturity, m);
-        const int years_int = static_cast<int>(years_to_maturity);
-        return coupon_bond_price_cexpr(par_value, coupon_rate, annual_yield, years_int, m);
+        const double per = annual_yield / static_cast<double>(m);
+        const double base = 1.0 + per;
+        const double C = par_value * (coupon_rate / static_cast<double>(m));
+        const double n = years_to_maturity * static_cast<double>(m);
+        const int nFull = static_cast<int>(std::floor(n));
+        const double frac = n - static_cast<double>(nFull);
+        double pv = 0.0;
+        double disc = 1.0;
+
+        for (int k = 1; k <= nFull; ++k) {
+            disc *= base;         
+            pv += C / disc;
+        }
+        if (frac > 0.0) { 
+            const double df_stub = std::pow(base,frac);
+            pv += (par_value + C * frac) / (disc * df_stub);
+        }
+        else {
+        pv += par_value / disc;
+        }
+        
+        return pv;
     }
 
-    double forward_value(double current_price, double annual_yield, double years_to_forward)noexcept{
+    double forward_value(double current_price, double annual_yield, double years_to_forward){
         const double forward_val = current_price * std::exp(annual_yield * years_to_forward);
         return forward_val;
+    }
+
+    double accrued_interest(double par_value, double coupon_rate, int m, double accrued_fraction){
+        const double C = par_value * (coupon_rate / static_cast<double>(m));
+        return C * accrued_fraction;
+    }
+
+    double dirty_coupon_price(double par_value,
+                            double coupon_rate,
+                            double annual_yield,
+                            int periods_remaining,
+                            int m,
+                            double accrued_fraction){
+                                    const double r    = annual_yield / static_cast<double>(m);
+                                    const double b    = 1.0 + r;
+                                    const double C    = par_value * (coupon_rate / static_cast<double>(m));
+                                    const int    n    = periods_remaining;
+
+                                    if (std::abs(r) < 1e-15) {
+                                        return C * static_cast<double>(n) + par_value;
+                                    }
+                                    const double b_neg_n = std::pow(b, -static_cast<double>(n));
+                                    const double ann     = (1.0 - b_neg_n) / (b - 1.0);
+                                    const double b_alpha = std::pow(b, accrued_fraction);
+
+                                    return b_alpha * (C * ann + par_value * b_neg_n);
+                                }
+    
+    double clean_coupon_price(double par_value,
+                            double coupon_rate,
+                            double annual_yield,
+                            int periods_remaining,
+                            int m,
+                            double accrued_fraction) {
+                                const double dirty = dirty_coupon_price(par_value, coupon_rate, annual_yield, periods_remaining, m, accrued_fraction);
+                                const double ai = accrued_interest(par_value, coupon_rate, m, accrued_fraction);
+                                return dirty - ai;
+                            }
+
+    double dirty_coupon_price_from_T(double par_value,
+                                    double coupon_rate,
+                                    double annual_yield,
+                                    double years_to_maturity,
+                                    int m) {
+        const double N = years_to_maturity * static_cast<double>(m);
+        const double fracN = N - std::floor(N);
+        const int n = static_cast<int>(std::ceil(N));
+        const double alpha = (std::abs(fracN) < 1e-12) ? 0.0 : (1.0 - fracN);
+
+        return dirty_coupon_price(par_value, coupon_rate, annual_yield, n, m, alpha);
+    }
+
+    double clean_coupon_price_from_T(double par_value,
+                                    double coupon_rate,
+                                    double annual_yield,
+                                    double years_to_maturity,
+                                    int m) {
+        const double N = years_to_maturity * static_cast<double>(m);
+        const double fracN = N - std::floor(N);
+        const int n = static_cast<int>(std::ceil(N));
+        const double alpha = (std::abs(fracN) < 1e-12) ? 0.0 : (1.0 - fracN);
+
+        return clean_coupon_price(par_value, coupon_rate, annual_yield, n, m, alpha);
     }
 
 } // namespace pyfi::bond
