@@ -1,7 +1,7 @@
 include(Catch)
 
-add_executable(test_bond test_bond.cpp)
-add_executable(test_option test_option.cpp)
+add_executable(test_bond test_bond.cpp test_bond_prices.cpp)
+add_executable(test_option test_option.cpp test_greeks.cpp)
 
 target_compile_features(test_bond PRIVATE cxx_std_20)
 target_compile_features(test_option PRIVATE cxx_std_20)
