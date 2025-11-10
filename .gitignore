@@ -5,6 +5,7 @@
 .idea/
 .vscode/
 *.iml
+_deps/
 
 # CMake (in-tree files)
 CMakeFiles/
