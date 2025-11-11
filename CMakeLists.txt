@@ -35,11 +35,13 @@ target_link_libraries(PyFi PRIVATE Boost::boost)
 
 if (COMMAND pybind11_add_module)
     pybind11_add_module(pyfi
-            pybind/bond_bind.cpp
+            pybind/pyfi_bind.cpp
+            pybind/bond_bind.h
     )
     target_link_libraries(pyfi PRIVATE PyFi)
 else ()
-    add_library(pyfi MODULE pybind/bond_bind.cpp)
+    add_library(pyfi MODULE pybind/bond_bind.h
+            pybind/pyfi_bind.cpp)
     if (TARGET pybind11::module)
         target_link_libraries(pyfi PRIVATE PyFi pybind11::module)
     elseif (TARGET pybind11::pybind11)
@@ -77,13 +79,13 @@ set_target_properties(pyfi PROPERTIES PREFIX "")
 
 add_custom_command(TARGET pyfi
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/python
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/pyfi
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:pyfi>
-        ${CMAKE_SOURCE_DIR}/python/$<TARGET_FILE_NAME:pyfi>
-        COMMENT "Copy pyfi module to ${CMAKE_SOURCE_DIR}/python for python import"
+        ${CMAKE_SOURCE_DIR}/pyfi/$<TARGET_FILE_NAME:pyfi>
+        COMMENT "Copy pyfi module to ${CMAKE_SOURCE_DIR}/pyfi for python import"
 )
 
-install(TARGETS pyfi LIBRARY DESTINATION ${CMAKE_SOURCE_DIR}/python)
+install(TARGETS pyfi LIBRARY DESTINATION ${CMAKE_SOURCE_DIR}/pyfi)
 
 add_subdirectory(test)

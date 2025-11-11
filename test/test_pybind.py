@@ -1,5 +1,3 @@
-import unittest
-
 import pyfi
 
-print(pyfi.add(10, 4))
+print(pyfi.present_value([1, 2, 3, ], 1, 2, 3, 4, False))
