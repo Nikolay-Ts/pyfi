@@ -6,6 +6,9 @@
 .vscode/
 *.iml
 
+# not to have old SO
+pyfi/*.so
+
 # CMake (in-tree files)
 CMakeFiles/
 CMakeCache.txt

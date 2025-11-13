@@ -70,10 +70,7 @@ namespace pyfi::bond {
      * @return vector of size years*m with coupons; last element adds par_value
      * @note returns empty vector if m <= 0 or years <= 0
      */
-    std::vector<double> build_bond_cashflows(double par_value, 
-        double coupon_rate,
-        int years,
-        int m);
+    std::vector<double> build_bond_cashflows(double par_value, double coupon_rate, int years, int m);
 
     /**
      * Price from a yield and an arbitrary cash-flow vector under discrete compounding.
@@ -83,9 +80,7 @@ namespace pyfi::bond {
      * @param m periods per year
      * @return present value
      */
-    double price_from_yield(const std::vector<double>& cash_flows,
-        double yield, 
-        int m);
+    double price_from_yield(const std::vector<double>& cash_flows, double yield, int m);
 
     /**
      * Zero-coupon bond price with fractional-maturity support (discrete compounding).
@@ -99,10 +94,7 @@ namespace pyfi::bond {
      * @return present value of the zero-coupon bond
      * @throw std::invalid_argument if m <= 0
      */
-    double zero_coupon_price(double par_value, 
-        double annual_yield, 
-        double years_to_maturity, 
-        int m = 2);
+    double zero_coupon_price(double par_value, double annual_yield, double years_to_maturity, int m = 2);
 
     /**
      * Coupon bond price with fractional-maturity support (discrete compounding).
@@ -121,11 +113,8 @@ namespace pyfi::bond {
      * @return present value of the coupon bond
      * @throw std::invalid_argument if m <= 0
      */
-    double coupon_bond_price(double par_value, 
-        double coupon_rate, 
-        double annual_yield, 
-        double years_to_maturity, 
-        int m = 2);
+    double
+    coupon_bond_price(double par_value, double coupon_rate, double annual_yield, double years_to_maturity, int m = 2);
 
     /**
      * Forward value under continuous compounding.
@@ -136,9 +125,7 @@ namespace pyfi::bond {
      * @return forward price as current_price * exp(annual_yield * years_to_forward)
      * @note If you prefer discrete compounding for consistency, use pow(1 + r, t) instead.
      */
-    double forward_value(double current_price, 
-        double annual_yield, 
-        double years_to_forward);
+    double forward_value(double current_price, double annual_yield, double years_to_forward);
 
     /**
      *
@@ -152,10 +139,7 @@ namespace pyfi::bond {
      * @return accrued interest between last coupon and settlement
      * @throw std::invalid_argument if m <= 0 or accrued_fraction ∉ [0,1)
      */
-    double accrued_interest(double par_value, 
-        double coupon_rate, 
-        int m, 
-        double accrued_fraction);
+    double accrued_interest(double par_value, double coupon_rate, int m, double accrued_fraction);
 
     /**
      * Calculates the dirty price (includes accrued interest) of a bond.
@@ -217,10 +201,10 @@ namespace pyfi::bond {
      * @return dirty price
      */
     double dirty_coupon_price_from_T(double par_value,
-                                    double coupon_rate,
-                                    double annual_yield,
-                                    double years_to_maturity,
-                                    int m);
+        double coupon_rate,
+        double annual_yield,
+        double years_to_maturity,
+        int m);
 
     /**
      * Calculates the clean price using time to maturity (T) in years.
@@ -237,10 +221,10 @@ namespace pyfi::bond {
      * @return clean price
      */
     double clean_coupon_price_from_T(double par_value,
-                                    double coupon_rate,
-                                    double annual_yield,
-                                    double years_to_maturity,
-                                    int m);
+        double coupon_rate,
+        double annual_yield,
+        double years_to_maturity,
+        int m);
 
 } // namespace pyfi::bond
 
