@@ -2,16 +2,28 @@
 // Created by Nikolay Tsonev on 30/10/2025.
 //
 
-#include "../include/pyfi/option.h"
 #include <boost/math/distributions/normal.hpp>
+
+#include "../include/pyfi/option.h"
 
 
 namespace pyfi::option {
 
-
     inline double Phi(const double x) {
         static const boost::math::normal Z(0.0, 1.0);
         return boost::math::cdf(Z, x);
+    }
+
+    inline double black_scholes_x(const double stock_price,
+        const double strike_price,
+        const double volatility,
+        const double risk_free_rate,
+        const double time) {
+
+        const auto numerator = std::log(stock_price / strike_price) +
+            (risk_free_rate + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
+
+        return (numerator / (volatility * std::sqrt(time)));
     }
 
     double black_scholes_call(const double stock_price,
@@ -23,11 +35,7 @@ namespace pyfi::option {
             throw std::invalid_argument("Time or volatility cannot be zero");
         }
 
-        // compute our x
-        const auto numerator = std::log(stock_price / strike_price) +
-            (risk_free_rate + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
-        const auto x = numerator / (volatility * std::sqrt(time));
-
+        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
         const auto s_phi = stock_price * Phi(x);
         const auto k_phi = strike_price * std::exp(-(risk_free_rate * time)) * Phi(x - volatility * std::sqrt(time));
 
@@ -52,6 +60,7 @@ namespace pyfi::option {
         const double pvK = strike_price * std::exp(-risk_free_rate * time);
         return pvK * Phi(-d2) - stock_price * Phi(-d1);
     }
+
 
     void call_payoff(std::vector<double>& spot_rates, const double strike_price) {
         const auto vec_size = spot_rates.size();

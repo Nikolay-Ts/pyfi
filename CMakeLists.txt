@@ -23,6 +23,7 @@ add_library(
         PyFi STATIC
         src/bond.cpp
         src/option.cpp
+        src/option_greeks.cpp
 )
 target_include_directories(
         PyFi PUBLIC
@@ -33,6 +34,12 @@ target_include_directories(
 set_target_properties(PyFi PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 target_link_libraries(PyFi PRIVATE Boost::boost)
+
+target_compile_options(PyFi PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+)
 
 #pybind11_add_module(pyfi MODULE
 #        src/bindings.cpp
