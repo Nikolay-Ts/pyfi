@@ -150,7 +150,7 @@ TEST_CASE("EU Binomial call and put options with a very large step") {
     bin_putt = binomial_eu_option(S, K, sigma, rs, n, T, put_payoff);
 
     // REQUIRE(bin_call == Approx(bs_call));
-    REQUIRE(bin_putt == Approx(bs_put).margin(1e-9));
+    REQUIRE(bin_putt == Approx(bs_put));
 
     S = 100;
     K = 100;

@@ -25,6 +25,7 @@ find_package(Boost 1.74 REQUIRED)
 add_library(PyFi STATIC
         src/bond.cpp
         src/option.cpp
+        src/option_greeks.cpp
 )
 target_include_directories(PyFi PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
@@ -33,6 +34,16 @@ target_include_directories(PyFi PUBLIC
 )
 target_link_libraries(PyFi PRIVATE Boost::boost)
 
+target_compile_options(PyFi PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+)
+
+#pybind11_add_module(pyfi MODULE
+#        src/bindings.cpp
+#)
+#target_link_libraries(pyfi PRIVATE PyFi)
 if (COMMAND pybind11_add_module)
     pybind11_add_module(pyfi
             pybind/pyfi_bind.cpp
