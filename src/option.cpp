@@ -18,10 +18,11 @@ namespace pyfi::option {
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
-        const double time) {
+        const double time,
+        const double yield_curve) {
 
         const auto numerator = std::log(stock_price / strike_price) +
-            (risk_free_rate + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
+            ((risk_free_rate - yield_curve) + (std::pow(volatility, 2) / 2)) * static_cast<double>(time);
 
         return (numerator / (volatility * std::sqrt(time)));
     }
@@ -30,12 +31,13 @@ namespace pyfi::option {
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
-        const double time) {
+        const double time,
+        const double yield_curve) {
         if (volatility < 1e-9 || time < 1e-9) {
             throw std::invalid_argument("Time or volatility cannot be zero");
         }
 
-        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time);
+        const auto x = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time, yield_curve);
         const auto s_phi = stock_price * Phi(x);
         const auto k_phi = strike_price * std::exp(-(risk_free_rate * time)) * Phi(x - volatility * std::sqrt(time));
 
@@ -46,15 +48,14 @@ namespace pyfi::option {
         const double strike_price,
         const double volatility,
         const double risk_free_rate,
-        const double time) {
+        const double time,
+        const double yield_curve) {
         if (volatility < 1e-9 || time < 1e-9) {
             throw std::invalid_argument("Time or volatility cannot be zero");
         }
 
         const double sqrtT = std::sqrt(time);
-        const double vv = volatility * volatility;
-        const double d1 =
-            (std::log(stock_price / strike_price) + (risk_free_rate + 0.5 * vv) * time) / (volatility * sqrtT);
+        const double d1 = black_scholes_x(stock_price, strike_price, volatility, risk_free_rate, time, yield_curve);
         const double d2 = d1 - volatility * sqrtT;
 
         const double pvK = strike_price * std::exp(-risk_free_rate * time);

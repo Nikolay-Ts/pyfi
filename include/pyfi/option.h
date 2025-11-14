@@ -35,10 +35,15 @@ namespace pyfi::option {
      * @param volatility
      * @param risk_free_rate
      * @param time
+     * @param yield_curve
      * @return price of the European call option
      */
-    double
-    black_scholes_x(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+    double black_scholes_x(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double time,
+        double yield_curve = 0.0);
 
     /**
      *
@@ -49,11 +54,16 @@ namespace pyfi::option {
      * @param volatility
      * @param risk_free_rate
      * @param time
+     * @param yield_curve
      * @return price of the European call option
      * @throw std::invalid if time or volatility is 0
      */
-    double
-    black_scholes_call(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+    double black_scholes_call(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double time,
+        double yield_curve = 0.0);
 
     /**
      *
@@ -69,8 +79,12 @@ namespace pyfi::option {
      * @return price of the European put option
      * @throw std::invalid if time or volatility is 0
      */
-    double
-    black_scholes_put(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
+    double black_scholes_put(double stock_price,
+        double strike_price,
+        double volatility,
+        double risk_free_rate,
+        double time,
+        double yield_curve = 0.0);
 
 
     /**
