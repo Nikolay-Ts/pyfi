@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=60.0", "wheel", "pybind11>=2.6", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyfi"
+version = "0.1.0"
+authors = [
+    { name = "Nikolay Tsonev" },
+    { name = "Bilal Waraich" }
+]
+
+[tool.setuptools.packages.find]
+include = ["pyfi*"]
