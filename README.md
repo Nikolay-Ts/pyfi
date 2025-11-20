@@ -12,7 +12,7 @@ then install the shared object into your venv
 
 > > python -m pip install .
 
-or if you want an instialltion that changes for each new compile automatically
+or if you want an installation that changes for each new compile automatically
 
 > > pip -m pip install -e . 
 
