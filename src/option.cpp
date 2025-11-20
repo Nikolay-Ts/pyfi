@@ -163,5 +163,31 @@ namespace pyfi::option {
         return options[0];
     }
 
+    double forward_from_yield(const double spot_price,
+        const double risk_free_rate,
+        const double time,
+        const double dividend_yield) {
+        if (spot_price <= 0.0) {
+            throw std::invalid_argument("spot_price must be positive");
+        }
+        if (time < 1e-9) {
+            throw std::invalid_argument("time must be positive");
+        }
+        return spot_price * std::exp((risk_free_rate - dividend_yield) * time);
+    }
+
+    double yield_from_forward(const double spot_price,
+        const double forward_price,
+        const double risk_free_rate,
+        const double time) {
+        if (spot_price <= 0.0 || forward_price <= 0.0) {
+            throw std::invalid_argument("spot_price and forward_price must be positive");
+        }
+        if (time < 1e-9) {
+            throw std::invalid_argument("time must be positive");
+        }
+        const double log_ratio = std::log(forward_price / spot_price);
+        return risk_free_rate - log_ratio / time;
+    }
 
 } // namespace pyfi::option

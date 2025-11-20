@@ -24,7 +24,6 @@ namespace pyfi::option {
      */
     double Phi(double x);
 
-
     /**
      *
      * Internal function that calculates the x1 variable (sometimes referred to as d1). user must ensure that
@@ -85,7 +84,6 @@ namespace pyfi::option {
         double risk_free_rate,
         double time,
         double yield_curve = 0.0);
-
 
     /**
      *  Different variation of the normal distribution PDF
@@ -216,7 +214,6 @@ namespace pyfi::option {
      */
     double bs_call_rho(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
 
-
     /**
      * Calculates the first derivative of the put option price w.r.t the interest rate of the underlying asset.
      *
@@ -228,7 +225,6 @@ namespace pyfi::option {
      * @return
      */
     double bs_put_rho(double stock_price, double strike_price, double volatility, double risk_free_rate, double time);
-
 
     /**
      *
@@ -242,7 +238,6 @@ namespace pyfi::option {
      * @return spot_rates - strike_price if the user will exercise their by option
      */
     void call_payoff(std::vector<double>& spot_rates, double strike_price);
-
 
     /**
      *
@@ -299,7 +294,6 @@ namespace pyfi::option {
         double time,
         payoff_func payoff);
 
-
     /**
      *
      *  calculates the call/put American option price from some underlying asset
@@ -321,6 +315,39 @@ namespace pyfi::option {
         int steps,
         double time,
         payoff_func payoff);
+
+
+    /**
+     * Computes the forward price of the underlying under continuous compounding:
+     *      F0 = S0 * exp((r - q) * T)
+     *
+     * @param spot_price     current spot price S0
+     * @param risk_free_rate continuously-compounded risk-free rate r
+     * @param time           time to maturity T (in years)
+     * @param dividend_yield continuously-compounded dividend yield q (default 0)
+     * @return forward price F0
+     * @throw std::invalid_argument if time <= 0 or spot_price <= 0
+     */
+    double forward_from_yield(double spot_price,
+        double risk_free_rate,
+        double time,
+        double dividend_yield = 0.0);
+
+    /**
+     * Computes the continuous dividend yield implied by a given forward price:
+     *      q = r - (1/T) * ln(F0 / S0)
+     *
+     * @param spot_price    current spot price S0
+     * @param forward_price forward price F0
+     * @param risk_free_rate continuously-compounded risk-free rate r
+     * @param time          time to maturity T (in years)
+     * @return implied continuous dividend yield q
+     * @throw std::invalid_argument if time <= 0 or spot_price <= 0 or forward_price <= 0
+     */
+    double yield_from_forward(double spot_price,
+        double forward_price,
+        double risk_free_rate,
+        double time);
 } // namespace pyfi::option
 
 #endif // OPTION_H
