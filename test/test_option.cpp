@@ -251,3 +251,15 @@ TEST_CASE("American call and put options") {
     REQUIRE(us_call == Approx(19475.21));
     REQUIRE(us_put == Approx(6196.960383141373));
 }
+
+TEST_CASE("forward_from_yield and yield_from_forward round-trip") {
+    const double S0 = 100.0;
+    const double r  = 0.03;
+    const double q  = 0.01;
+    const double T  = 2.0;
+
+    const double F  = pyfi::option::forward_from_yield(S0, r, T, q);
+    const double q_back = pyfi::option::yield_from_forward(S0, F, r, T);
+
+    REQUIRE(q_back == Approx(q).epsilon(1e-12));
+}
