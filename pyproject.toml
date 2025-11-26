@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "pyfi"
 version = "0.1.0"
 authors = [
-    { name = "Nikolay Tsonev" },
-    { name = "Bilal Waraich" }
+    { name = "Nikolay Tsonev", email = "nikolay.l.tsonev@gmail.com" },
+    { name = "Bilal Waraich", email = "bilal.waraich2004@outlook.com" }
 ]
 
 [tool.setuptools.packages.find]
