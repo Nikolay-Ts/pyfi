@@ -1,6 +1,6 @@
 # pyfi - Python Financial Instruments Library
 # Import submodules from the compiled C++ extension
 
-from ._pyfi import bond, option
+from ._pyfi import bond, option , brownian
 
-__all__ = ['bond', 'option']
+__all__ = ['bond', 'option' , 'brownian']

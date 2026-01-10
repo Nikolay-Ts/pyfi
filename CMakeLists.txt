@@ -32,6 +32,7 @@ add_library(PyFi STATIC
         src/bond.cpp
         src/option.cpp
         src/option_greeks.cpp
+        src/brownian.cpp
 )
 
 target_include_directories(PyFi PUBLIC include)

@@ -8,6 +8,7 @@
 
 #include "./bond_bind.cpp"
 #include "./option_bind.cpp"
+#include "./brownian_bind.cpp"
 
 namespace py = pybind11;
 
@@ -23,4 +24,9 @@ PYBIND11_MODULE(_pyfi, m) {
         "Contains functions related to options pricing for american and european options alongside the greeks for the "
         "Black-Scholes formula");
     add_option_module(option);
+
+    auto brownian = m.def_submodule("brownian",
+        "Contains functions for stochastic processes: Brownian motion, Geometric Brownian Motion (GBM), "
+        "and Euler-Maruyama numerical solver for general SDEs");
+    add_brownian_module(brownian);
 }
